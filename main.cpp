@@ -1,15 +1,17 @@
 //|-----------------------------------------------------------------------|
-//| Author   : EDUARDO ESCOBAR ALBERTO                                    |
-//| Date     : 21/02/2017                                                 |
-//| Comments : Diseño y Análisis de Algoritmos                            |
-//|            Escuela Técnica Superior de Ingeniería Informática         |
-//|            Universidad de La Laguna                                   |  
+//| Autor       : EDUARDO ESCOBAR ALBERTO                                 |
+//| Versión     : 21/02/2017                                              |
+//| Comentarios : Diseño y Análisis de Algoritmos                         |
+//|               Escuela Superior de Ingeniería y Tecnología             |
+//|               Universidad de La Laguna                                |  
 //|                                                                       |
-//| Compiling:                                                            |                                                         
+//| Compilación : g++ -g main.cpp UnidadEntrada.cpp UnidadSalida.cpp      |
+//|               UnidadMemoria.cpp UnidadALC.cpp -o RAM                  |                                                         
 //|-----------------------------------------------------------------------|
 
 #include <iostream>
 #include "UnidadEntrada.hpp"
+#include "UnidadMemoria.hpp"
 
 using namespace std;
 
@@ -17,14 +19,14 @@ int main(int argc, char *argv[]) { // -----> FUNCIÓN PRINCIPAL.
 
 	system ("clear");
 
-	UnidadEntrada *UE;
+	UnidadEntrada *unidadEntrada;
+	UnidadMemoria *unidadMemoria;
 
-	cout << endl;
 	cout << "  ___|PRÁCTICA 1: DISEÑO Y ANÁLISIS DE ALGORITMOS|___" << endl;
-	cout << "---------------------- MÁQUINA RAM ----------------------" << endl;
+	cout << "-------------------- MÁQUINA RAM --------------------" << endl;
 
-	UE = new UnidadEntrada(argv[1]); // Creación de un objeto de unidad de entrada pasando el nombre del fichero (línea de comandos).
-	cout << UE->mostrarCabezaLectura() << endl;
+	unidadMemoria = new UnidadMemoria(argv[1]); // Creación de un objeto de unidad de memoria pasando el nombre del fichero (línea de comandos).
+	unidadEntrada = new UnidadEntrada(argv[2]); // Creación de un objeto de unidad de entrada pasando el nombre del fichero (línea de comandos).
 
 	return (0); 
 

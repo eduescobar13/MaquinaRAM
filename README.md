@@ -1,4 +1,4 @@
-#ESIT ULL Grado de Informatica
+#ESIT ULL Grado de Informática
 ##DISEÑO Y ANÁLISIS DE ALGORITMOS. Elaboración de una Máquina RAM.
 #### Realizada por Eduardo Escobar Alberto
 
