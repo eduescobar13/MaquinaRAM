@@ -24,6 +24,7 @@ int main(int argc, char *argv[]) { // -----> FUNCIÓN PRINCIPAL.
 	cout << "---------------------- MÁQUINA RAM ----------------------" << endl;
 
 	UE = new UnidadEntrada(argv[1]); // Creación de un objeto de unidad de entrada pasando el nombre del fichero (línea de comandos).
+	cout << UE->mostrarCabezaLectura() << endl;
 
 	return (0); 
 
