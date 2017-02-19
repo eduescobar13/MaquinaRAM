@@ -2,12 +2,14 @@
 
 UnidadMemoria::UnidadMemoria(void): // Constructor.
     memoriaDato(),
-    memoriaPrograma()
+    memoriaPrograma(),
+    vectorEtiqueta()
 {}
 
 UnidadMemoria::UnidadMemoria(char nombreFichero[]): // Constructor.
     memoriaDato(),
-    memoriaPrograma()
+    memoriaPrograma(),
+    vectorEtiqueta()
 {
 	ifstream fichero; // Variable del tipo ifstream para trabajar con el fichero.
 	fichero.open(nombreFichero); // Apertura del fichero.
@@ -22,7 +24,8 @@ UnidadMemoria::UnidadMemoria(char nombreFichero[]): // Constructor.
 			}
 			else {
 				fichero >> elementoFichero;
-				cout << elementoFichero.back() << endl;
+				if (elementoFichero.back() == ':') {
+					insertarEtiqueta();
 			}
 		}
 		fichero.close(); // Cierre del fichero.
@@ -33,6 +36,7 @@ UnidadMemoria::~UnidadMemoria(void) { // Destructor.
 
 	memoriaDato.clear(); // Vaciamos por completo la memoria de datos.
 	memoriaPrograma.clear(); // Vaciamos por completo la memoria de programas.
+	vectorEtiqueta.clear(); // Vaciamos las etiquetas asociadas al programa ejecutado.
 }
 
 void UnidadMemoria::insertarDato(int dato) { // Método que inserta un dato en la memoria de datos.
@@ -40,9 +44,22 @@ void UnidadMemoria::insertarDato(int dato) { // Método que inserta un dato en l
 	memoriaDato.push_back(dato);
 }
 
-void UnidadMemoria::insertarInstruccion(instruccion instruccion) { // Método que inserta una instrucción en la memoria de programas.
+void UnidadMemoria::insertarInstruccion(string operacion, string operandoEtiqueta) { // Método que inserta una instrucción en la memoria de programas.
 
-	memoriaPrograma.push_back(instruccion);
+	instruccion nuevaInstruccion; // Creamos una variable del tipo instrucción para insertarla en la memoria de programa.
+	nuevaInstruccion.operacion        = operacion;
+	nuevaInstruccion.operandoEtiqueta = operandoEtiqueta;
+
+	memoriaPrograma.push_back(nuevaInstruccion); // Insertamos en la memoria programa la nueva instrucción.
+}
+
+void UnidadMemoria::insertarEtiqueta(string nombre, int registro) { // Método que inserta una etiqueta en el vector de etiquetas.
+
+	etiqueta nuevaEtiqueta; // Creamos una variable del tipo etiqueta para insertarlo en nuestro vector.
+	nuevaEtiqueta.nombre   = nombre;
+	nuevaEtiqueta.registro = registro;
+
+	vectorEtiqueta.push_back(nuevaEtiqueta); // Insertamos en el vector la nueva etiqueta.
 }
 
 void UnidadMemoria::mostrarMemoriaDato() { // Método que muestra por pantalla la memoria de datos.
@@ -57,7 +74,7 @@ void UnidadMemoria::mostrarMemoriaDato() { // Método que muestra por pantalla l
 void UnidadMemoria::mostrarMemoriaPrograma() { // Método que muestra por pantalla la memoria de programas.
 
 	for(int i = 0; i < memoriaPrograma.size(); i++) {
-		cout << memoriaPrograma[i].operacion << " " << memoriaPrograma[i].operando << endl;
+		cout << memoriaPrograma[i].operacion << " " << memoriaPrograma[i].operandoEtiqueta << endl;
 		cout << "--------------" << endl;
 	}
 	cout << endl;
@@ -83,6 +100,16 @@ vector<instruccion> UnidadMemoria::getMemoriaPrograma() { // Método getter del 
 void UnidadMemoria::setMemoriaPrograma(vector<instruccion> memoriaPrograma) { // Método setter del atributo memoriaPrograma.
 
 	this->memoriaPrograma = memoriaPrograma;
+}
+
+vector<etiqueta> UnidadMemoria::getVectorEtiqueta() { // Método getter del atributo vectorEtiqueta.
+
+	return vectorEtiqueta;
+}
+
+void UnidadMemoria::setVectorEtiqueta(vector<etiqueta> vectorEtiqueta) { // Método setter del atributo vectorEtiqueta.
+
+	this->vectorEtiqueta = vectorEtiqueta;
 }
 
 
