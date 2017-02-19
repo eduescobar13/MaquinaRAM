@@ -12,15 +12,17 @@ UnidadMemoria::UnidadMemoria(char nombreFichero[]): // Constructor.
 	ifstream fichero; // Variable del tipo ifstream para trabajar con el fichero.
 	fichero.open(nombreFichero); // Apertura del fichero.
 	char lineaFichero[50]; // Variable para almacenar las lineas del fichero.
+	string elementoFichero; // Variable para almacenar las lineas del fichero.
 
 	if (fichero.is_open()) { // Comprobamos si se ha abierto el fichero.
+		fichero.getline(lineaFichero, 100); // Leemos las linea del fichero, almacenando el contenido en la variable lineaFichero.
 		while (fichero.eof() == false) { // Mientras no se llegue al final del fichero.	
-			fichero.getline(lineaFichero, 100); // Leemos las linea del fichero, almacenando el contenido en la variable lineaFichero.
 			if(lineaFichero[0] == '#') { // Si el primer carácter es una #, omitimos (comentario).
-				fichero.getline(lineaFichero, 100); 
+				fichero.getline(lineaFichero, 100); // Leemos las linea del fichero, almacenando el contenido en la variable lineaFichero.
 			}
 			else {
-				cout << lineaFichero << endl;
+				fichero >> elementoFichero;
+				cout << elementoFichero.back() << endl;
 			}
 		}
 		fichero.close(); // Cierre del fichero.
@@ -55,7 +57,7 @@ void UnidadMemoria::mostrarMemoriaDato() { // Método que muestra por pantalla l
 void UnidadMemoria::mostrarMemoriaPrograma() { // Método que muestra por pantalla la memoria de programas.
 
 	for(int i = 0; i < memoriaPrograma.size(); i++) {
-		cout << memoriaPrograma[i] << endl;
+		cout << memoriaPrograma[i].operacion << " " << memoriaPrograma[i].operando << endl;
 		cout << "--------------" << endl;
 	}
 	cout << endl;
