@@ -9,14 +9,19 @@ UnidadMemoria::UnidadMemoria(char nombreFichero[]): // Constructor.
     memoriaDato(),
     memoriaPrograma()
 {
-	string elementoFichero; // Variable para ir leyendo los elementos del fichero.
 	ifstream fichero; // Variable del tipo ifstream para trabajar con el fichero.
 	fichero.open(nombreFichero); // Apertura del fichero.
+	char lineaFichero[50]; // Variable para almacenar las lineas del fichero.
 
 	if (fichero.is_open()) { // Comprobamos si se ha abierto el fichero.
 		while (fichero.eof() == false) { // Mientras no se llegue al final del fichero.	
-			fichero >> elementoFichero; // Leemos del fichero.
-			insertarInstruccion(elementoFichero); // Insertamos el elemento en la cinta.
+			fichero.getline(lineaFichero, 100); // Leemos las linea del fichero, almacenando el contenido en la variable lineaFichero.
+			if(lineaFichero[0] == '#') { // Si el primer carácter es una #, omitimos (comentario).
+				fichero.getline(lineaFichero, 100); 
+			}
+			else {
+				cout << lineaFichero << endl;
+			}
 		}
 		fichero.close(); // Cierre del fichero.
 	}
@@ -33,9 +38,27 @@ void UnidadMemoria::insertarDato(int dato) { // Método que inserta un dato en l
 	memoriaDato.push_back(dato);
 }
 
-void UnidadMemoria::insertarInstruccion(string instruccion) { // Método que inserta una instrucción en la memoria de programas.
+void UnidadMemoria::insertarInstruccion(instruccion instruccion) { // Método que inserta una instrucción en la memoria de programas.
 
 	memoriaPrograma.push_back(instruccion);
+}
+
+void UnidadMemoria::mostrarMemoriaDato() { // Método que muestra por pantalla la memoria de datos.
+
+	for(int i = 0; i < memoriaDato.size(); i++) {
+		cout << memoriaDato[i] << endl;
+		cout << "--------------" << endl;
+	}
+	cout << endl;
+}
+
+void UnidadMemoria::mostrarMemoriaPrograma() { // Método que muestra por pantalla la memoria de programas.
+
+	for(int i = 0; i < memoriaPrograma.size(); i++) {
+		cout << memoriaPrograma[i] << endl;
+		cout << "--------------" << endl;
+	}
+	cout << endl;
 }
 
 //-----------------> MÉTODOS GETTER Y SETTER DE LA CLASE.
@@ -50,12 +73,12 @@ void UnidadMemoria::setMemoriaDato(vector<int> memoriaDato) { // Método setter 
 	this->memoriaDato = memoriaDato;
 }
 
-vector<string> UnidadMemoria::getMemoriaPrograma() { // Método getter del atributo memoriaPrograma.
+vector<instruccion> UnidadMemoria::getMemoriaPrograma() { // Método getter del atributo memoriaPrograma.
 
 	return memoriaPrograma;
 }
 
-void UnidadMemoria::setMemoriaPrograma(vector<string> memoriaPrograma) { // Método setter del atributo memoriaPrograma.
+void UnidadMemoria::setMemoriaPrograma(vector<instruccion> memoriaPrograma) { // Método setter del atributo memoriaPrograma.
 
 	this->memoriaPrograma = memoriaPrograma;
 }
