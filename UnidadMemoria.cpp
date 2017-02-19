@@ -14,7 +14,7 @@ UnidadMemoria::UnidadMemoria(char nombreFichero[]): // Constructor.
 	ifstream fichero; // Variable del tipo ifstream para trabajar con el fichero.
 	fichero.open(nombreFichero); // Apertura del fichero.
 	char lineaFichero[50]; // Variable para almacenar las lineas del fichero.
-	string elementoFichero; // Variable para almacenar las lineas del fichero.
+	string elementoFichero, auxiliar; // Variables para almacenar las lineas del fichero.
 	int registro = 0; // Contador para obtener el registro al que se asocia una etiqueta. Inicializada en el registro 0.
 
 	if (fichero.is_open()) { // Comprobamos si se ha abierto el fichero.
@@ -30,7 +30,12 @@ UnidadMemoria::UnidadMemoria(char nombreFichero[]): // Constructor.
 					insertarEtiqueta(elementoFichero, registro);
 					cout << elementoFichero << " " << registro << endl;
 				}
-				registro++; // Aumentamos el contador de registro.
+				else {
+					auxiliar = elementoFichero; // Almacenamos el valor de elementoFichero para no perderlo.
+					fichero >> elementoFichero;
+					insertarInstruccion(auxiliar, elementoFichero);
+					registro++; // Aumentamos el contador de registro.
+				}
 			}
 		}
 		registro = 0; // Reiniciamos el contador de registro.

@@ -27,7 +27,7 @@ int main(int argc, char *argv[]) { // -----> FUNCIÓN PRINCIPAL.
 
 	unidadMemoria = new UnidadMemoria(argv[1]); // Creación de un objeto de unidad de memoria pasando el nombre del fichero (línea de comandos).
 	unidadEntrada = new UnidadEntrada(argv[2]); // Creación de un objeto de unidad de entrada pasando el nombre del fichero (línea de comandos).
-	//unidadMemoria->mostrarMemoriaPrograma();
+	unidadMemoria->mostrarMemoriaPrograma();
 
 	return (0); 
 
