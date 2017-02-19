@@ -15,6 +15,7 @@ UnidadMemoria::UnidadMemoria(char nombreFichero[]): // Constructor.
 	fichero.open(nombreFichero); // Apertura del fichero.
 	char lineaFichero[50]; // Variable para almacenar las lineas del fichero.
 	string elementoFichero; // Variable para almacenar las lineas del fichero.
+	int registro = 0; // Contador para obtener el registro al que se asocia una etiqueta. Inicializada en el registro 0.
 
 	if (fichero.is_open()) { // Comprobamos si se ha abierto el fichero.
 		fichero.getline(lineaFichero, 100); // Leemos las linea del fichero, almacenando el contenido en la variable lineaFichero.
@@ -24,10 +25,15 @@ UnidadMemoria::UnidadMemoria(char nombreFichero[]): // Constructor.
 			}
 			else {
 				fichero >> elementoFichero;
-				if (elementoFichero.back() == ':') {
-					insertarEtiqueta();
+				if (elementoFichero.back() == ':') { // Si se lee una etiqueta (palabra terminada en :).
+					elementoFichero.pop_back(); // Eliminamos ':' antes de insertar.
+					insertarEtiqueta(elementoFichero, registro);
+					cout << elementoFichero << " " << registro << endl;
+				}
+				registro++; // Aumentamos el contador de registro.
 			}
 		}
+		registro = 0; // Reiniciamos el contador de registro.
 		fichero.close(); // Cierre del fichero.
 	}
 }
