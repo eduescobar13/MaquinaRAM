@@ -33,7 +33,8 @@ void UnidadALC::ejecutarInstruccion(UnidadEntrada *unidadEntrada, UnidadMemoria 
 		unidadMemoria->insertarDato(operando, 0); // El operando se carga en el registro 0.
 	}
 	if ((instruccion.compare("STORE") == 0) || (instruccion.compare("store") == 0)) { // Instrucción STORE.
-		cout << "STORE" << endl;
+		int operando = atoi(argumento.c_str());
+		unidadMemoria->insertarDato(unidadMemoria->devolverAcumulador(), operando);
 	}
 	if ((instruccion.compare("ADD") == 0) || (instruccion.compare("add") == 0)) { // Instrucción ADD.
 		cout << "ADD" << endl;

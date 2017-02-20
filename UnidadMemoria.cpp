@@ -103,6 +103,12 @@ void UnidadMemoria::mostrarMemoriaPrograma() { // Método que muestra por pantal
 	cout << endl;
 }
 
+int UnidadMemoria::devolverAcumulador() { // Método que devuelve el valor del acumulador (R0).
+
+	return memoriaDato[0];
+}
+
+
 //-----------------> MÉTODOS GETTER Y SETTER DE LA CLASE.
 
 vector<int> UnidadMemoria::getMemoriaDato() { // Método getter del atributo memoriaDato.
