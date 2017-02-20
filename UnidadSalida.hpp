@@ -12,16 +12,16 @@ class UnidadSalida { // Clase para la implementación de una unidad de salida pa
 
         vector<int> cintaSalida; // Vector (posibilidad de ser infinito) que implementa la cinta de salida.
         int cabezaEscritura; // Atributo para implementar el cabezal de escritura de la cinta de salida.
-        ofstream ficheroSalida; // Atributo para hacer uso de un fichero de salida.
+        char ficheroSalida[]; // Atributo para hacer uso de un fichero de salida.
 
     public: // Métodos privados de la clase.
 
-    	UnidadSalida(void); // Constructor por defecto.
-        UnidadSalida(char nombreFichero[]); // Constructor.
-        ~UnidadSalida(void); // Destructor.
+        UnidadSalida(); // Constructor.
+        ~UnidadSalida(); // Destructor.
 
         void escribirElemento(int elemento); // Método que escribe un elemento en la cinta.
         void mostrarCintaSalida(); // Método para mostrar bajo formato la cinta de salida.
+        void volcarCintaFichero(char nombreFichero[]); // Método que vuelca el contenido de la cinta en el fichero.
 
 		vector<int> getCintaSalida(); // Método getter del atributo cintaSalida.
 		void setCintaSalida(vector<int> cintaSalida); // Método setter del atributo cintaSalida.

@@ -6,6 +6,7 @@
 
 #include "UnidadEntrada.hpp"
 #include "UnidadMemoria.hpp"
+#include "UnidadSalida.hpp"
 
 using namespace std;
 
@@ -20,8 +21,8 @@ class UnidadALC { // Clase para la implementación de una unidad Aritmética, L�
     	UnidadALC(void); // Constructor.
         ~UnidadALC(void); // Destructor.
 
-        void realizarOperaciones(UnidadEntrada *unidadEntrada, UnidadMemoria *unidadMemoria); // Método principal de la máquina RAM.
-        void ejecutarInstruccion(UnidadEntrada *unidadEntrada, UnidadMemoria *unidadMemoria, string instruccion, string argumento); // Método que comprueba la validez de la instruccion y la ejecuta.
+        void realizarOperaciones(UnidadEntrada *unidadEntrada, UnidadMemoria *unidadMemoria, UnidadSalida *unidadSalida, char nombreFichero[]); // Método principal de la máquina RAM.
+        void ejecutarInstruccion(UnidadEntrada *unidadEntrada, UnidadMemoria *unidadMemoria, UnidadSalida *unidadSalida, string instruccion, string argumento); // Método que comprueba la validez de la instruccion y la ejecuta.
 
         int getPunteroIP(); // Método getter del atributo punteroIP.
 		void setPunteroIP(int punteroIP); // Método setter del atributo punteroIP.

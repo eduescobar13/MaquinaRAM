@@ -9,24 +9,26 @@ UnidadALC::~UnidadALC() { // Destructor.
 	punteroIP = 0; // Ponemos en el punteroIP en el registro 0.
 }
 
-void UnidadALC::realizarOperaciones(UnidadEntrada *unidadEntrada, UnidadMemoria *unidadMemoria) { // Método principal de la máquina RAM. 
+void UnidadALC::realizarOperaciones(UnidadEntrada *unidadEntrada, UnidadMemoria *unidadMemoria, UnidadSalida *unidadSalida, char nombreFichero[]) { // Método principal de la máquina RAM. 
 
 	string operacionRealizar  = unidadMemoria->getMemoriaPrograma()[0].operacion; // Variable para almacenar la operación a realizar. 
 	string argumentoOperacion = unidadMemoria->getMemoriaPrograma()[0].argumento; // Variable para almacenar los argumentos de la operación a realizar.
 	int numeroOperaciones     = unidadMemoria->getMemoriaPrograma().size(); // Variable que almacena el número de operaciones de la memoria de programa.
-	int contador = 0; // Variable contador para determinar el registro actual.
+	int registroActual = 0; // Variable contador para determinar el registro actual.
 
 	while ((operacionRealizar.compare("halt") != 0) && (operacionRealizar.compare("HALT") != 0) && (this->getPunteroIP() != numeroOperaciones)) { 
-		ejecutarInstruccion(unidadEntrada, unidadMemoria, operacionRealizar, argumentoOperacion);
-		contador++;
-		this->setPunteroIP(contador);
+		ejecutarInstruccion(unidadEntrada, unidadMemoria, unidadSalida, operacionRealizar, argumentoOperacion);
+		registroActual++;
+		this->setPunteroIP(registroActual);
 		operacionRealizar  = unidadMemoria->getMemoriaPrograma()[this->getPunteroIP()].operacion;
 		argumentoOperacion = unidadMemoria->getMemoriaPrograma()[this->getPunteroIP()].argumento;
 	}
 
+	unidadSalida->volcarCintaFichero(nombreFichero); // Volcamos el contenido de la cinta de salida en el fichero.
+
 }
 
-void UnidadALC::ejecutarInstruccion(UnidadEntrada *unidadEntrada, UnidadMemoria *unidadMemoria, string instruccion, string argumento) { // Método que comprueba la validez de la instruccion y la ejecuta.
+void UnidadALC::ejecutarInstruccion(UnidadEntrada *unidadEntrada, UnidadMemoria *unidadMemoria, UnidadSalida *unidadSalida, string instruccion, string argumento) { // Método que comprueba la validez de la instruccion y la ejecuta.
 
 	if ((instruccion.compare("LOAD") == 0) || (instruccion.compare("load") == 0)) { // Instrucción LOAD.
 		int operando = atoi(argumento.c_str()); // Al no ser una etiqueta, convertimos el argumento en un entero.
@@ -62,7 +64,8 @@ void UnidadALC::ejecutarInstruccion(UnidadEntrada *unidadEntrada, UnidadMemoria 
 		unidadMemoria->insertarDato(valorLeido, operando); // Se lee un valor de la cinta de entrada y se almacena en la memoria según el operando.
 	}
 	if ((instruccion.compare("WRITE") == 0) || (instruccion.compare("write") == 0)) { // Instrucción WRITE.
-		cout << "WRITE" << endl;
+		int operando = atoi(argumento.c_str());
+		unidadSalida->escribirElemento(operando);
 	}
 	if ((instruccion.compare("JUMP") == 0) || (instruccion.compare("jump") == 0)) { // Instrucción JUMP.
 		cout << "JUMP" << endl;
