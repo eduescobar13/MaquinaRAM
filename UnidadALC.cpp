@@ -34,10 +34,12 @@ void UnidadALC::ejecutarInstruccion(UnidadEntrada *unidadEntrada, UnidadMemoria 
 	}
 	if ((instruccion.compare("STORE") == 0) || (instruccion.compare("store") == 0)) { // Instrucción STORE.
 		int operando = atoi(argumento.c_str());
-		unidadMemoria->insertarDato(unidadMemoria->devolverAcumulador(), operando);
+		unidadMemoria->insertarDato(unidadMemoria->devolverAcumulador(), operando); // El contenido de R0 se almacena en la memoria según el operando.
 	}
 	if ((instruccion.compare("ADD") == 0) || (instruccion.compare("add") == 0)) { // Instrucción ADD.
-		cout << "ADD" << endl;
+		int operando = atoi(argumento.c_str());
+		int suma     = operando + unidadMemoria->devolverAcumulador();
+		unidadMemoria->insertarDato(suma, 0); // El operando se suma a R0 y el resultado se almacena en R0.
 	}
 	if ((instruccion.compare("SUB") == 0) || (instruccion.compare("sub") == 0)) { // Instrucción SUB.
 		cout << "SUB" << endl;

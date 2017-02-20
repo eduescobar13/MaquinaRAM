@@ -57,8 +57,14 @@ UnidadMemoria::~UnidadMemoria(void) { // Destructor.
 
 void UnidadMemoria::insertarDato(int dato, int posicion) { // Método que inserta un dato en la memoria de datos en el registro dado.
 
-	memoriaDato.resize(posicion + 1); // Redimensionamos la memoria de datos para que pueda almacenar cualquier posición de registro pasada.
-	memoriaDato[posicion] = dato;
+	if (posicion >= memoriaDato.size()) { // Solo redimensionamos en caso de que sea necesario.
+		memoriaDato.resize(posicion + 1); // Redimensionamos la memoria de datos para que pueda almacenar cualquier posición de registro pasada.
+		memoriaDato[posicion] = dato;
+	}
+	else {
+		memoriaDato[posicion] = dato;
+	}
+
 }
 
 void UnidadMemoria::insertarInstruccion(string operacion, string argumento) { // Método que inserta una instrucción en la memoria de programas.
