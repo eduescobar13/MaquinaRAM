@@ -60,11 +60,11 @@ void UnidadMemoria::insertarDato(int dato) { // Método que inserta un dato en l
 	memoriaDato.push_back(dato);
 }
 
-void UnidadMemoria::insertarInstruccion(string operacion, string operandoEtiqueta) { // Método que inserta una instrucción en la memoria de programas.
+void UnidadMemoria::insertarInstruccion(string operacion, string argumento) { // Método que inserta una instrucción en la memoria de programas.
 
 	instruccion nuevaInstruccion; // Creamos una variable del tipo instrucción para insertarla en la memoria de programa.
 	nuevaInstruccion.operacion        = operacion;
-	nuevaInstruccion.operandoEtiqueta = operandoEtiqueta;
+	nuevaInstruccion.argumento        = argumento;
 
 	memoriaPrograma.push_back(nuevaInstruccion); // Insertamos en la memoria programa la nueva instrucción.
 }
@@ -90,7 +90,7 @@ void UnidadMemoria::mostrarMemoriaDato() { // Método que muestra por pantalla l
 void UnidadMemoria::mostrarMemoriaPrograma() { // Método que muestra por pantalla la memoria de programas.
 
 	for(int i = 0; i < memoriaPrograma.size(); i++) {
-		cout << memoriaPrograma[i].operacion << " " << memoriaPrograma[i].operandoEtiqueta << endl;
+		cout << memoriaPrograma[i].operacion << " " << memoriaPrograma[i].argumento << endl;
 		cout << "--------------" << endl;
 	}
 	cout << endl;

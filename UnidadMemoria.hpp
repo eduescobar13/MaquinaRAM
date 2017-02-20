@@ -8,8 +8,8 @@
 using namespace std;
 
 typedef struct { // Definición de una estructura que constituyen una instruccion de la RAM.
-	string operacion; // Variable que guarda la operacion a realizar.
-	string operandoEtiqueta;  // Variable que almacena el operando o etiqueta de la instrucción.
+	string operacion;  // Variable que guarda la operacion a realizar.
+	string argumento;  // Variable que almacena los argumentos de la instrucción.
 } instruccion;
 
 typedef struct { // Definición de una estructura para almacenar las etiquetas y el registro asociado.
@@ -32,7 +32,7 @@ class UnidadMemoria { // Clase para la implementación de una unidad de memoria 
         ~UnidadMemoria(void); // Destructor.
 
         void insertarDato(int dato); // Método que inserta un elemento en la memoria de datos.
-        void insertarInstruccion(string operacion, string operandoEtiqueta); // Método que inserta una instrucción en la memoria de programas.
+        void insertarInstruccion(string operacion, string argumento); // Método que inserta una instrucción en la memoria de programas.
         void insertarEtiqueta(string nombre, int registro); // Método que inserta una etiqueta en el vector de etiquetas.
         void mostrarMemoriaDato(); // Método que muestra por pantalla la memoria de datos.
 		void mostrarMemoriaPrograma(); // Método que muestra por pantalla la memoria de programas.
