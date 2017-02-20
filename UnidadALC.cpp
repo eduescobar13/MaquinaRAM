@@ -83,7 +83,9 @@ void UnidadALC::ejecutarInstruccion(UnidadEntrada *unidadEntrada, UnidadMemoria 
 		}
 	}
 	if ((instruccion.compare("JGTZ") == 0) || (instruccion.compare("jgtz") == 0)) { // Instrucción JGTZ.
-		cout << "JGTZ" << endl;
+		if (unidadMemoria->devolverAcumulador() > 0) { // Si el R0 es mayor 0.
+			instruccionActual = unidadMemoria->devolverRegistroEtiqueta(argumento); // Almacenamos el registro asociado a la etiqueta del jzero.
+		}
 	}
 
 }
