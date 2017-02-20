@@ -1,6 +1,6 @@
 #include "UnidadMemoria.hpp" // Incluimos el fichero UnidadMemoria.hpp con las declaración de nuestra clase.
 
-UnidadMemoria::UnidadMemoria(void): // Constructor.
+UnidadMemoria::UnidadMemoria(void): // Constructor por defecto..
     memoriaDato(),
     memoriaPrograma(),
     vectorEtiqueta()

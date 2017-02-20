@@ -2,6 +2,9 @@
 
 #include <iostream> 
 
+#include "UnidadEntrada.hpp"
+#include "UnidadMemoria.hpp"
+
 using namespace std;
 
 class UnidadALC { // Clase para la implementación de una unidad Aritmética, Lógica y de Control de una memoria RAM.
@@ -14,4 +17,9 @@ class UnidadALC { // Clase para la implementación de una unidad Aritmética, L�
 
     	UnidadALC(void); // Constructor.
         ~UnidadALC(void); // Destructor.
+
+        void realizarOperaciones(UnidadEntrada *unidadEntrada, UnidadMemoria *unidadMemoria); // Método principal de la máquina RAM.
+
+        int getPunteroIP(); // Método getter del atributo punteroIP.
+		void setPunteroIP(int punteroIP); // Método setter del atributo punteroIP.
 };
