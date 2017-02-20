@@ -4,5 +4,5 @@
 
 lee:	load 3
 		store 4
-		sub 2
+		mul 2
 fin:	halt

@@ -47,7 +47,9 @@ void UnidadALC::ejecutarInstruccion(UnidadEntrada *unidadEntrada, UnidadMemoria 
 		unidadMemoria->insertarDato(resta, 0); // El operando se resta a R0 y el resultado se almacena en R0.
 	}
 	if ((instruccion.compare("MUL") == 0) || (instruccion.compare("mul") == 0)) { // Instrucción MUL.
-		cout << "MUL" << endl;
+		int operando = atoi(argumento.c_str());
+		int producto = unidadMemoria->devolverAcumulador() * operando;
+		unidadMemoria->insertarDato(producto, 0); // El operando se multiplica a R0 y el resultado se almacena en R0.
 	}
 	if ((instruccion.compare("DIV") == 0) || (instruccion.compare("div") == 0)) { // Instrucción DIV.
 		cout << "DIV" << endl;
