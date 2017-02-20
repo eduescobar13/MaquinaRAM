@@ -28,14 +28,19 @@ UnidadMemoria::UnidadMemoria(char nombreFichero[]): // Constructor.
 				if (elementoFichero.back() == ':') { // Si se lee una etiqueta (palabra terminada en :).
 					elementoFichero.pop_back(); // Eliminamos ':' antes de insertar.
 					insertarEtiqueta(elementoFichero, registro);
-					cout << elementoFichero << " " << registro << endl;
 				}
 				else {
 					auxiliar = elementoFichero; // Almacenamos el valor de elementoFichero para no perderlo.
-					fichero >> elementoFichero;
+					if ((auxiliar.compare("halt") == 0) || (auxiliar.compare("HALT") == 0)) {
+						elementoFichero = ' '; // Si es un halt, no existe operando, insertamos un espacio.
+					}
+					else {
+						fichero >> elementoFichero; // Si no es halt, leemos el operando.
+					}
 					insertarInstruccion(auxiliar, elementoFichero);
 					registro++; // Aumentamos el contador de registro.
 				}
+				elementoFichero.clear();
 			}
 		}
 		registro = 0; // Reiniciamos el contador de registro.
