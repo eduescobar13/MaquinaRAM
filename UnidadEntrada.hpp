@@ -19,7 +19,7 @@ class UnidadEntrada { // Clase para la implementación de una unidad de entrada 
         UnidadEntrada(char nombreFichero[]); // Constructor.
         ~UnidadEntrada(void); // Destructor.
 
-        void insertarElemento(int elemento); // Método que inserta un elemento en la cinta.
+        void escribirElemento(int elemento); // Método que escribe un elemento en la cinta.
         int leerElemento(); // Método para la lectura de elementos de la cinta.
         void mostrarCintaEntrada(); // Método para mostrar bajo formato la cinta de entrada.
         int mostrarCabezaLectura(); // Función que devuelve el elemento situado en la cabeza de lectura.

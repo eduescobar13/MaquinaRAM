@@ -7,32 +7,32 @@ UnidadEntrada::UnidadEntrada(void): // Constructor por defecto.
 
 UnidadEntrada::UnidadEntrada(char nombreFichero[]): // Constructor.
     cintaEntrada(),
-    cabezaLectura(0) // Inicialmente el cabezal de lectura se encuentra en la posición 0.
+    cabezaLectura(0) // Inicializamos a 0.
 {
 	int elementoFichero; // Variable para ir leyendo los elementos del fichero.
 	ifstream fichero; // Variable del tipo ifstream para trabajar con el fichero.
 	fichero.open(nombreFichero); // Apertura del fichero.
-	int contador; // Variable contador para invertir la cinta de entrada.
 
 	if (fichero.is_open()) { // Comprobamos si se ha abierto el fichero.
 		while (fichero.eof() == false) { // Mientras no se llegue al final del fichero.	
 			fichero >> elementoFichero; // Leemos del fichero.
-			insertarElemento(elementoFichero); // Insertamos el elemento en la cinta.
+			escribirElemento(elementoFichero); // Insertamos el elemento en la cinta.
 		}
 		fichero.close(); // Cierre del fichero.
 	}
 
-	cabezaLectura = cintaEntrada.size() - 1; // La cabeza de lectura será el último elemento del vector.
 }
 
 UnidadEntrada::~UnidadEntrada(void) { // Destructor.
 
 	cintaEntrada.clear(); // Vaciamos por completo la cinta de entrada.
+	cabezaLectura = 0; // Ponemos a 0 la cabeza de lectura.
 }
 
-void UnidadEntrada::insertarElemento(int elemento) { // Método que inserta un elemento en la cinta.
+void UnidadEntrada::escribirElemento(int elemento) { // Método que escribe un elemento en la cinta.
 
 	cintaEntrada.push_back(elemento);
+	setCabezaLectura(cintaEntrada.size() - 1); // Ponemos la cabeza de lectura en el último elemento del vector.
 }
 
 int UnidadEntrada::leerElemento() { // Método para la lectura de elementos de la cinta.
@@ -40,6 +40,7 @@ int UnidadEntrada::leerElemento() { // Método para la lectura de elementos de l
 	int elementoRetorno = mostrarCabezaLectura(); // Almacenamos el elemento situado en la cabeza de lectura. 
 
 	cintaEntrada.pop_back(); // Eliminamos dicho elemento de la cinta.
+	setCabezaLectura(cabezaLectura - 1); // Disminuimos la cabeza de lectura.
 
 	return elementoRetorno;
 }

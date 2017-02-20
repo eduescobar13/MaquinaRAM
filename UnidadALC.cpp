@@ -30,7 +30,7 @@ void UnidadALC::ejecutarInstruccion(UnidadEntrada *unidadEntrada, UnidadMemoria 
 
 	if ((instruccion.compare("LOAD") == 0) || (instruccion.compare("load") == 0)) { // Instrucción LOAD.
 		int operando = atoi(argumento.c_str()); // Al no ser una etiqueta, convertimos el argumento en un entero.
-		unidadMemoria->insertarDato(operando, 0); // El operando se carga en el registro 0.
+		unidadMemoria->insertarDato(operando, ACUMULADOR); // El operando se carga en el registro 0.
 	}
 	if ((instruccion.compare("STORE") == 0) || (instruccion.compare("store") == 0)) { // Instrucción STORE.
 		int operando = atoi(argumento.c_str());
@@ -39,27 +39,27 @@ void UnidadALC::ejecutarInstruccion(UnidadEntrada *unidadEntrada, UnidadMemoria 
 	if ((instruccion.compare("ADD") == 0) || (instruccion.compare("add") == 0)) { // Instrucción ADD.
 		int operando = atoi(argumento.c_str());
 		int suma     = unidadMemoria->devolverAcumulador() + operando;
-		unidadMemoria->insertarDato(suma, 0); // El operando se suma a R0 y el resultado se almacena en R0.
+		unidadMemoria->insertarDato(suma, ACUMULADOR); // El operando se suma a R0 y el resultado se almacena en R0.
 	}
 	if ((instruccion.compare("SUB") == 0) || (instruccion.compare("sub") == 0)) { // Instrucción SUB.
 		int operando = atoi(argumento.c_str());
 		int resta    = unidadMemoria->devolverAcumulador() - operando;
-		unidadMemoria->insertarDato(resta, 0); // El operando se resta a R0 y el resultado se almacena en R0.
+		unidadMemoria->insertarDato(resta, ACUMULADOR); // El operando se resta a R0 y el resultado se almacena en R0.
 	}
 	if ((instruccion.compare("MUL") == 0) || (instruccion.compare("mul") == 0)) { // Instrucción MUL.
 		int operando = atoi(argumento.c_str());
 		int producto = unidadMemoria->devolverAcumulador() * operando;
-		unidadMemoria->insertarDato(producto, 0); // El operando se multiplica a R0 y el resultado se almacena en R0.
+		unidadMemoria->insertarDato(producto, ACUMULADOR); // El operando se multiplica a R0 y el resultado se almacena en R0.
 	}
 	if ((instruccion.compare("DIV") == 0) || (instruccion.compare("div") == 0)) { // Instrucción DIV.
 		int operando = atoi(argumento.c_str());
 		int division = unidadMemoria->devolverAcumulador() / operando; // División redondeada a entero.
-		unidadMemoria->insertarDato(division, 0); // El operando divide a R0 y el resultado se almacena en R0.
+		unidadMemoria->insertarDato(division, ACUMULADOR); // El operando divide a R0 y el resultado se almacena en R0.
 	}
 	if ((instruccion.compare("READ") == 0) || (instruccion.compare("read") == 0)) { // Instrucción READ.
 		int operando   = atoi(argumento.c_str());
-		int valorLeido = unidadEntrada->leerElemento();
-		unidadMemoria->insertarDato(valorLeido, operando);
+		int valorLeido = unidadEntrada->leerElemento(); // Almacenamos el valor leido de la cinta de entrada.
+		unidadMemoria->insertarDato(valorLeido, operando); // Se lee un valor de la cinta de entrada y se almacena en la memoria según el operando.
 	}
 	if ((instruccion.compare("WRITE") == 0) || (instruccion.compare("write") == 0)) { // Instrucción WRITE.
 		cout << "WRITE" << endl;

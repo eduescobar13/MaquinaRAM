@@ -5,6 +5,8 @@
 #include <vector>
 #include <fstream>
 
+#define ACUMULADOR 0 // Constante de ubicación del registro 0 (acumulador).
+
 using namespace std;
 
 typedef struct { // Definición de una estructura que constituyen una instruccion de la RAM.

@@ -110,7 +110,7 @@ void UnidadMemoria::mostrarMemoriaPrograma() { // Método que muestra por pantal
 
 int UnidadMemoria::devolverAcumulador() { // Método que devuelve el valor del acumulador (R0).
 
-	return memoriaDato[0];
+	return memoriaDato[ACUMULADOR];
 }
 
 

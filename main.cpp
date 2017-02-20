@@ -13,6 +13,7 @@
 #include "UnidadEntrada.hpp"
 #include "UnidadMemoria.hpp"
 #include "UnidadALC.hpp"
+#include "UnidadSalida.hpp"
 
 using namespace std;
 
@@ -24,19 +25,22 @@ int main(int argc, char *argv[]) { // -----> FUNCIÓN PRINCIPAL.
 	UnidadEntrada *unidadEntrada;
 	UnidadMemoria *unidadMemoria;
 	UnidadALC	  *unidadALC;
+	UnidadSalida  *unidadSalida;
 
 	cout << "  ___|PRÁCTICA 1: DISEÑO Y ANÁLISIS DE ALGORITMOS|___" << endl;
 	cout << "-------------------- MÁQUINA RAM --------------------" << endl;
 
-	unidadMemoria = new UnidadMemoria(argv[1]); // Creación de un objeto de unidad de memoria pasando el nombre del fichero (línea de comandos).
 	unidadEntrada = new UnidadEntrada(argv[2]); // Creación de un objeto de unidad de entrada pasando el nombre del fichero (línea de comandos).
+	unidadMemoria = new UnidadMemoria(argv[1]); // Creación de un objeto de unidad de memoria pasando el nombre del fichero (línea de comandos).
 	unidadALC     = new UnidadALC();            // Creación de un objeto de unidad de algoritmía, lógica y control.
+	unidadSalida  = new UnidadSalida(argv[3]);  // Creación de un objeto de unidad de salida pasando el nombre del fichero (línea de comandos).
 
 	unidadEntrada->mostrarCintaEntrada();
 	unidadALC->realizarOperaciones(unidadEntrada, unidadMemoria);
 	cout << "----------------------------" << endl;
 	unidadMemoria->mostrarMemoriaDato();
 	unidadEntrada->mostrarCintaEntrada();
+	unidadSalida->mostrarCintaSalida();
 
 	return(0); 
 
