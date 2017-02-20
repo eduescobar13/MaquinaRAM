@@ -21,7 +21,7 @@ class UnidadALC { // Clase para la implementación de una unidad Aritmética, L�
         ~UnidadALC(void); // Destructor.
 
         void realizarOperaciones(UnidadEntrada *unidadEntrada, UnidadMemoria *unidadMemoria); // Método principal de la máquina RAM.
-        void ejecutarInstruccion(string instruccion); // Método que comprueba la validez de la instruccion y la ejecuta.
+        void ejecutarInstruccion(UnidadEntrada *unidadEntrada, UnidadMemoria *unidadMemoria, string instruccion, string argumento); // Método que comprueba la validez de la instruccion y la ejecuta.
 
         int getPunteroIP(); // Método getter del atributo punteroIP.
 		void setPunteroIP(int punteroIP); // Método setter del atributo punteroIP.

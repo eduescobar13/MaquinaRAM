@@ -55,9 +55,10 @@ UnidadMemoria::~UnidadMemoria(void) { // Destructor.
 	vectorEtiqueta.clear(); // Vaciamos las etiquetas asociadas al programa ejecutado.
 }
 
-void UnidadMemoria::insertarDato(int dato) { // Método que inserta un dato en la memoria de datos.
+void UnidadMemoria::insertarDato(int dato, int posicion) { // Método que inserta un dato en la memoria de datos en el registro dado.
 
-	memoriaDato.push_back(dato);
+	memoriaDato.resize(posicion + 1); // Redimensionamos la memoria de datos para que pueda almacenar cualquier posición de registro pasada.
+	memoriaDato[posicion] = dato;
 }
 
 void UnidadMemoria::insertarInstruccion(string operacion, string argumento) { // Método que inserta una instrucción en la memoria de programas.
@@ -81,8 +82,14 @@ void UnidadMemoria::insertarEtiqueta(string nombre, int registro) { // Método q
 void UnidadMemoria::mostrarMemoriaDato() { // Método que muestra por pantalla la memoria de datos.
 
 	for(int i = 0; i < memoriaDato.size(); i++) {
-		cout << memoriaDato[i] << endl;
-		cout << "--------------" << endl;
+		if(i == 0) {
+			cout << "R" << i << " (ACC): " << memoriaDato[i] << endl;
+			cout << "--------------" << endl;
+		}
+		else {
+			cout << "R" << i << ": " << memoriaDato[i] << endl;
+			cout << "--------------" << endl;
+		}
 	}
 	cout << endl;
 }
@@ -90,7 +97,7 @@ void UnidadMemoria::mostrarMemoriaDato() { // Método que muestra por pantalla l
 void UnidadMemoria::mostrarMemoriaPrograma() { // Método que muestra por pantalla la memoria de programas.
 
 	for(int i = 0; i < memoriaPrograma.size(); i++) {
-		cout << memoriaPrograma[i].operacion << " " << memoriaPrograma[i].argumento << endl;
+		cout << "P" << i << ": " << memoriaPrograma[i].operacion << " " << memoriaPrograma[i].argumento << endl;
 		cout << "--------------" << endl;
 	}
 	cout << endl;

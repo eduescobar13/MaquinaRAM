@@ -17,20 +17,20 @@ void UnidadALC::realizarOperaciones(UnidadEntrada *unidadEntrada, UnidadMemoria 
 	int contador = 0; // Variable contador para determinar el registro actual.
 
 	while ((operacionRealizar.compare("halt") != 0) && (operacionRealizar.compare("HALT") != 0) && (this->getPunteroIP() != numeroOperaciones)) { 
-		ejecutarInstruccion(operacionRealizar);
+		ejecutarInstruccion(unidadEntrada, unidadMemoria, operacionRealizar, argumentoOperacion);
 		contador++;
 		this->setPunteroIP(contador);
-		operacionRealizar = unidadMemoria->getMemoriaPrograma()[this->getPunteroIP()].operacion;
+		operacionRealizar  = unidadMemoria->getMemoriaPrograma()[this->getPunteroIP()].operacion;
+		argumentoOperacion = unidadMemoria->getMemoriaPrograma()[this->getPunteroIP()].argumento;
 	}
 
 }
 
-void UnidadALC::ejecutarInstruccion(string instruccion) { // Método que comprueba la validez de la instruccion y la ejecuta.
-
-	cout << instruccion << endl;
+void UnidadALC::ejecutarInstruccion(UnidadEntrada *unidadEntrada, UnidadMemoria *unidadMemoria, string instruccion, string argumento) { // Método que comprueba la validez de la instruccion y la ejecuta.
 
 	if ((instruccion.compare("LOAD") == 0) || (instruccion.compare("load") == 0)) { // Instrucción LOAD.
-		cout << "LOAD" << endl;
+		int operando = atoi(argumento.c_str()); // Al no ser una etiqueta, convertimos el argumento en un entero.
+		unidadMemoria->insertarDato(operando, 0); // El operando se carga en el registro 0.
 	}
 	if ((instruccion.compare("STORE") == 0) || (instruccion.compare("store") == 0)) { // Instrucción STORE.
 		cout << "STORE" << endl;

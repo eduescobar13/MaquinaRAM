@@ -31,7 +31,7 @@ class UnidadMemoria { // Clase para la implementación de una unidad de memoria 
     	UnidadMemoria(char nombreFichero[]); // Constructor.
         ~UnidadMemoria(void); // Destructor.
 
-        void insertarDato(int dato); // Método que inserta un elemento en la memoria de datos.
+        void insertarDato(int dato, int posicion); // Método que inserta un elemento en la memoria de datos en el registro dado.
         void insertarInstruccion(string operacion, string argumento); // Método que inserta una instrucción en la memoria de programas.
         void insertarEtiqueta(string nombre, int registro); // Método que inserta una etiqueta en el vector de etiquetas.
         void mostrarMemoriaDato(); // Método que muestra por pantalla la memoria de datos.

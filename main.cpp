@@ -33,6 +33,7 @@ int main(int argc, char *argv[]) { // -----> FUNCIÓN PRINCIPAL.
 	unidadALC     = new UnidadALC();            // Creación de un objeto de unidad de algoritmía, lógica y control.
 
 	unidadALC->realizarOperaciones(unidadEntrada, unidadMemoria);
+	unidadMemoria->mostrarMemoriaDato();
 
 	return(0); 
 
