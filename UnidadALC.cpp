@@ -78,7 +78,9 @@ void UnidadALC::ejecutarInstruccion(UnidadEntrada *unidadEntrada, UnidadMemoria 
 		instruccionActual = unidadMemoria->devolverRegistroEtiqueta(argumento); // Almacenamos el registro asociado a la etiqueta del jump.
 	}
 	if ((instruccion.compare("JZERO") == 0) || (instruccion.compare("jzero") == 0)) { // Instrucción JZERO.
-		cout << "JZERO" << endl;
+		if (unidadMemoria->devolverAcumulador() == 0) { // Si el R0 es igual 0.
+			instruccionActual = unidadMemoria->devolverRegistroEtiqueta(argumento); // Almacenamos el registro asociado a la etiqueta del jzero.
+		}
 	}
 	if ((instruccion.compare("JGTZ") == 0) || (instruccion.compare("jgtz") == 0)) { // Instrucción JGTZ.
 		cout << "JGTZ" << endl;

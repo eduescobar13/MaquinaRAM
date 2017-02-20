@@ -4,8 +4,9 @@
 
 lee:	load 9
 		store 4
-		jump prueba
+		div 2
 		read 1
 		write 3
-prueba: write 4	
+		write 5
+		write 4
 fin:	halt
