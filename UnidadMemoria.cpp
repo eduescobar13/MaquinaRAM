@@ -86,7 +86,7 @@ void UnidadMemoria::insertarEtiqueta(string nombre, int registro) { // Método q
 
 void UnidadMemoria::mostrarMemoriaDato() { // Método que muestra por pantalla la memoria de datos.
 
-	for(int i = 0; i < memoriaDato.size(); i++) {
+	for (int i = 0; i < memoriaDato.size(); i++) {
 		if(i == 0) {
 			cout << "R" << i << " (ACC): " << memoriaDato[i] << endl;
 			cout << "--------------" << endl;
@@ -101,18 +101,30 @@ void UnidadMemoria::mostrarMemoriaDato() { // Método que muestra por pantalla l
 
 void UnidadMemoria::mostrarMemoriaPrograma() { // Método que muestra por pantalla la memoria de programas.
 
-	for(int i = 0; i < memoriaPrograma.size(); i++) {
+	for (int i = 0; i < memoriaPrograma.size(); i++) {
 		cout << "P" << i << ": " << memoriaPrograma[i].operacion << " " << memoriaPrograma[i].argumento << endl;
 		cout << "--------------" << endl;
 	}
 	cout << endl;
 }
 
-int UnidadMemoria::devolverAcumulador() { // Método que devuelve el valor del acumulador (R0).
+int UnidadMemoria::devolverAcumulador() { // Función que devuelve el valor del acumulador (R0).
 
 	return memoriaDato[ACUMULADOR];
 }
 
+int UnidadMemoria::devolverRegistroEtiqueta(string etiqueta) { // Función que devuelve el registro asociado a una etiqueta.
+
+	int valorRetorno;
+
+	for (int i = 0; i < vectorEtiqueta.size(); i++) { // Buscamos la etiqueta dentro del vector de etiquetas.
+		if (vectorEtiqueta[i].nombre.compare(etiqueta) == 0) {
+			valorRetorno = vectorEtiqueta[i].registro;
+		}
+	}
+
+	return valorRetorno;
+}
 
 //-----------------> MÉTODOS GETTER Y SETTER DE LA CLASE.
 
