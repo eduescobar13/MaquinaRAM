@@ -32,8 +32,11 @@ int main(int argc, char *argv[]) { // -----> FUNCIÓN PRINCIPAL.
 	unidadEntrada = new UnidadEntrada(argv[2]); // Creación de un objeto de unidad de entrada pasando el nombre del fichero (línea de comandos).
 	unidadALC     = new UnidadALC();            // Creación de un objeto de unidad de algoritmía, lógica y control.
 
+	unidadEntrada->mostrarCintaEntrada();
 	unidadALC->realizarOperaciones(unidadEntrada, unidadMemoria);
+	cout << "----------------------------" << endl;
 	unidadMemoria->mostrarMemoriaDato();
+	unidadEntrada->mostrarCintaEntrada();
 
 	return(0); 
 

@@ -52,10 +52,14 @@ void UnidadALC::ejecutarInstruccion(UnidadEntrada *unidadEntrada, UnidadMemoria 
 		unidadMemoria->insertarDato(producto, 0); // El operando se multiplica a R0 y el resultado se almacena en R0.
 	}
 	if ((instruccion.compare("DIV") == 0) || (instruccion.compare("div") == 0)) { // Instrucción DIV.
-		cout << "DIV" << endl;
+		int operando = atoi(argumento.c_str());
+		int division = unidadMemoria->devolverAcumulador() / operando; // División redondeada a entero.
+		unidadMemoria->insertarDato(division, 0); // El operando divide a R0 y el resultado se almacena en R0.
 	}
 	if ((instruccion.compare("READ") == 0) || (instruccion.compare("read") == 0)) { // Instrucción READ.
-		cout << "READ" << endl;
+		int operando   = atoi(argumento.c_str());
+		int valorLeido = unidadEntrada->leerElemento();
+		unidadMemoria->insertarDato(valorLeido, operando);
 	}
 	if ((instruccion.compare("WRITE") == 0) || (instruccion.compare("write") == 0)) { // Instrucción WRITE.
 		cout << "WRITE" << endl;

@@ -12,6 +12,7 @@ UnidadEntrada::UnidadEntrada(char nombreFichero[]): // Constructor.
 	int elementoFichero; // Variable para ir leyendo los elementos del fichero.
 	ifstream fichero; // Variable del tipo ifstream para trabajar con el fichero.
 	fichero.open(nombreFichero); // Apertura del fichero.
+	int contador; // Variable contador para invertir la cinta de entrada.
 
 	if (fichero.is_open()) { // Comprobamos si se ha abierto el fichero.
 		while (fichero.eof() == false) { // Mientras no se llegue al final del fichero.	
@@ -21,6 +22,7 @@ UnidadEntrada::UnidadEntrada(char nombreFichero[]): // Constructor.
 		fichero.close(); // Cierre del fichero.
 	}
 
+	cabezaLectura = cintaEntrada.size() - 1; // La cabeza de lectura será el último elemento del vector.
 }
 
 UnidadEntrada::~UnidadEntrada(void) { // Destructor.
@@ -33,7 +35,16 @@ void UnidadEntrada::insertarElemento(int elemento) { // Método que inserta un e
 	cintaEntrada.push_back(elemento);
 }
 
-void UnidadEntrada::mostrarCinta() { // Método para mostrar bajo formato la cinta de entrada.
+int UnidadEntrada::leerElemento() { // Método para la lectura de elementos de la cinta.
+
+	int elementoRetorno = mostrarCabezaLectura(); // Almacenamos el elemento situado en la cabeza de lectura. 
+
+	cintaEntrada.pop_back(); // Eliminamos dicho elemento de la cinta.
+
+	return elementoRetorno;
+}
+
+void UnidadEntrada::mostrarCintaEntrada() { // Método para mostrar bajo formato la cinta de entrada.
 
 	for(int i = 0; i < cintaEntrada.size(); i++) {
 		cout << cintaEntrada[i] << "|";
@@ -44,7 +55,7 @@ void UnidadEntrada::mostrarCinta() { // Método para mostrar bajo formato la cin
 
 int UnidadEntrada::mostrarCabezaLectura() { // Función que devuelve el elemento situado en la cabeza de lectura.
 
-	return cintaEntrada[cabezaLectura];
+	return cintaEntrada[getCabezaLectura()];
 }
 
 //----------------> MÉTODOS GETTER Y SETTER DE LA CLASE.

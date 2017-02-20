@@ -64,7 +64,6 @@ void UnidadMemoria::insertarDato(int dato, int posicion) { // Método que insert
 	else {
 		memoriaDato[posicion] = dato;
 	}
-
 }
 
 void UnidadMemoria::insertarInstruccion(string operacion, string argumento) { // Método que inserta una instrucción en la memoria de programas.
