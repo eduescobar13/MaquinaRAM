@@ -40,6 +40,8 @@ class UnidadMemoria { // Clase para la implementación de una unidad de memoria 
 		void mostrarMemoriaPrograma(); // Método que muestra por pantalla la memoria de programas.
 		int devolverAcumulador(); // Funció que devuelve el valor del acumulador (R0).
 		int devolverRegistroEtiqueta(string etiqueta); // Función que devuelve el registro asociado a una etiqueta.
+		int devolverDato(int numeroRegistro); // Función que devuelve el dato del registro pasado por parámetro.
+
 
         vector<int> getMemoriaDato(); // Método getter del atributo memoriaDato.
 		void setMemoriaDato(vector<int> memoriaDato); // Método setter del atributo memoriaDato.	

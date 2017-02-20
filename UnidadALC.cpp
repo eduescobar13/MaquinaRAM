@@ -1,12 +1,12 @@
 #include "UnidadALC.hpp" // Incluimos el fichero UnidadALC.hpp con la declaración de nuestra clase.
 
 UnidadALC::UnidadALC(): // Constructor.
-    punteroIP(0) // Inicialmente apuntamos al registro 0.
+    punteroIP(ACUMULADOR) // Inicialmente apuntamos al registro 0 (ACC).
 {}
 
 UnidadALC::~UnidadALC() { // Destructor.
 
-	punteroIP = 0; // Ponemos en el punteroIP en el registro 0.
+	punteroIP = 0; // Ponemos el punteroIP a 0.
 }
 
 void UnidadALC::realizarOperaciones(UnidadEntrada *unidadEntrada, UnidadMemoria *unidadMemoria, UnidadSalida *unidadSalida, char nombreFichero[]) { // Método principal de la máquina RAM. 
@@ -14,11 +14,11 @@ void UnidadALC::realizarOperaciones(UnidadEntrada *unidadEntrada, UnidadMemoria 
 	string operacionRealizar  = unidadMemoria->getMemoriaPrograma()[0].operacion; // Variable para almacenar la operación a realizar. 
 	string argumentoOperacion = unidadMemoria->getMemoriaPrograma()[0].argumento; // Variable para almacenar los argumentos de la operación a realizar.
 	int numeroOperaciones     = unidadMemoria->getMemoriaPrograma().size(); // Variable que almacena el número de operaciones de la memoria de programa.
-	int instruccionActual = 0; // Variable contador para determinar el registro actual.
+	int instruccionActual     = 0; // Variable contador para determinar el registro actual.
 
 	while ((operacionRealizar.compare("halt") != 0) && (operacionRealizar.compare("HALT") != 0) && (this->getPunteroIP() != numeroOperaciones)) { 
 		ejecutarInstruccion(unidadEntrada, unidadMemoria, unidadSalida, operacionRealizar, argumentoOperacion, instruccionActual);
-		this->setPunteroIP(instruccionActual);
+		this->setPunteroIP(instruccionActual); // Establecemos la instrucción a la que apunta el punteroIP.
 		cout << "OP: " << operacionRealizar << endl;
 		operacionRealizar  = unidadMemoria->getMemoriaPrograma()[this->getPunteroIP()].operacion;
 		argumentoOperacion = unidadMemoria->getMemoriaPrograma()[this->getPunteroIP()].argumento;
@@ -71,7 +71,7 @@ void UnidadALC::ejecutarInstruccion(UnidadEntrada *unidadEntrada, UnidadMemoria 
 	}
 	if ((instruccion.compare("WRITE") == 0) || (instruccion.compare("write") == 0)) { // Instrucción WRITE.
 		int operando = atoi(argumento.c_str());
-		unidadSalida->escribirElemento(operando); // Se escribe el operando en la cinta.
+		unidadSalida->escribirElemento(unidadMemoria->devolverDato(operando)); // Se escribe el registro asociado al operando en la cinta.
 	    instruccionActual++;
 	}
 	if ((instruccion.compare("JUMP") == 0) || (instruccion.compare("jump") == 0)) { // Instrucción JUMP.
@@ -81,10 +81,16 @@ void UnidadALC::ejecutarInstruccion(UnidadEntrada *unidadEntrada, UnidadMemoria 
 		if (unidadMemoria->devolverAcumulador() == 0) { // Si el R0 es igual 0.
 			instruccionActual = unidadMemoria->devolverRegistroEtiqueta(argumento); // Almacenamos el registro asociado a la etiqueta del jzero.
 		}
+		else {
+			instruccionActual++;
+		}
 	}
 	if ((instruccion.compare("JGTZ") == 0) || (instruccion.compare("jgtz") == 0)) { // Instrucción JGTZ.
 		if (unidadMemoria->devolverAcumulador() > 0) { // Si el R0 es mayor 0.
 			instruccionActual = unidadMemoria->devolverRegistroEtiqueta(argumento); // Almacenamos el registro asociado a la etiqueta del jzero.
+		}
+		else {
+			instruccionActual++;
 		}
 	}
 

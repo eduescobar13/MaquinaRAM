@@ -126,6 +126,11 @@ int UnidadMemoria::devolverRegistroEtiqueta(string etiqueta) { // Función que d
 	return valorRetorno;
 }
 
+int UnidadMemoria::devolverDato(int numeroRegistro) { // Función que devuelve el dato del registro pasado por parámetro.
+
+	return memoriaDato[numeroRegistro];
+}
+
 //-----------------> MÉTODOS GETTER Y SETTER DE LA CLASE.
 
 vector<int> UnidadMemoria::getMemoriaDato() { // Método getter del atributo memoriaDato.
