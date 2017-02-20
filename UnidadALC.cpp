@@ -31,7 +31,7 @@ void UnidadALC::ejecutarInstruccion(UnidadEntrada *unidadEntrada, UnidadMemoria 
 
 	if ((instruccion.compare("LOAD") == 0) || (instruccion.compare("load") == 0)) { // Instrucción LOAD.
 		int operando = atoi(argumento.c_str()); // Al no ser una etiqueta, convertimos el argumento en un entero.
-		unidadMemoria->insertarDato(operando, ACUMULADOR); // El operando se carga en el registro 0.
+		unidadMemoria->insertarDato(unidadMemoria->devolverDato(operando), ACUMULADOR); // El registro asociado al operando se carga en R0.
 		instruccionActual++; // Incrementamos a la siguiente instrucción.
 	}
 	if ((instruccion.compare("STORE") == 0) || (instruccion.compare("store") == 0)) { // Instrucción STORE.
