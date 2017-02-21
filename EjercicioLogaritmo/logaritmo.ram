@@ -1,0 +1,35 @@
+# Programa que calcula el lognX.
+# Se debe colocar en el fichero de entrada 1º n y 2º X.
+# El resultado se muestra en el fichero de salida.
+
+			READ 1
+			LOAD 1
+			STORE 2
+			LOAD 2
+			JGTZ comprobar
+			JZERO comprobar
+			JUMP error
+comprobar:  READ 1
+			LOAD 1
+			JGTZ inicio
+			JUMP error
+inicio:		LOAD =1
+			STORE 3
+			LOAD 2
+bucle:  	JZERO terminar
+			DIV 1
+			STORE 2
+			LOAD 3
+			ADD =1
+			STORE 3
+			LOAD 2
+			JUMP bucle
+terminar:	LOAD 3
+			SUB =2
+			STORE 3
+			WRITE 3 
+			HALT
+error:      LOAD =-1
+			STORE 1
+			WRITE 1
+			HALT
