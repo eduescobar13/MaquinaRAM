@@ -16,10 +16,12 @@ void UnidadALC::realizarOperaciones(UnidadEntrada *unidadEntrada, UnidadMemoria 
 	int numeroOperaciones     = unidadMemoria->getMemoriaPrograma().size(); // Variable que almacena el número de operaciones de la memoria de programa.
 	int instruccionActual     = 0; // Variable contador para determinar el registro actual.
 	int totalOperaciones      = 0; // Contador para almacenar el número de operaciones ejecutadas.
+	bool existeError       = false; // Variable boola para detectar errores.       
 
 	if (debug == 0) {
-		while ((operacionRealizar.compare("halt") != 0) && (operacionRealizar.compare("HALT") != 0) && (this->getPunteroIP() != numeroOperaciones)) { 
-			ejecutarInstruccion(unidadEntrada, unidadMemoria, unidadSalida, operacionRealizar, argumentoOperacion, instruccionActual);
+		while ((operacionRealizar.compare("halt") != 0) && (operacionRealizar.compare("HALT") != 0) && 
+			   (this->getPunteroIP() != numeroOperaciones) && (existeError != true)) { 
+			existeError = ejecutarInstruccion(unidadEntrada, unidadMemoria, unidadSalida, operacionRealizar, argumentoOperacion, instruccionActual);
 			this->setPunteroIP(instruccionActual); // Establecemos la instrucción a la que apunta el punteroIP.
 			operacionRealizar  = unidadMemoria->getMemoriaPrograma()[this->getPunteroIP()].operacion;
 			argumentoOperacion = unidadMemoria->getMemoriaPrograma()[this->getPunteroIP()].argumento;
@@ -29,7 +31,8 @@ void UnidadALC::realizarOperaciones(UnidadEntrada *unidadEntrada, UnidadMemoria 
 		cout << "TOTAL INSTRUCCIONES EJECUTADAS: " << totalOperaciones << endl;
 	}
 	else if (debug == 1) {
-		while ((operacionRealizar.compare("halt") != 0) && (operacionRealizar.compare("HALT") != 0) && (this->getPunteroIP() != numeroOperaciones)) { 
+		while ((operacionRealizar.compare("halt") != 0) && (operacionRealizar.compare("HALT") != 0) && 
+			   (this->getPunteroIP() != numeroOperaciones) && (existeError != true)) { 
 			cout << "------------------- INSTRUCCIÓN " << totalOperaciones + 1 << " -------------------" << endl;
 			cout << "REGISTRO IP: " << operacionRealizar << " " << argumentoOperacion << endl;
 			cout << "INSTRUCCIONES EJECUTADAS: " << totalOperaciones << endl;
@@ -40,7 +43,7 @@ void UnidadALC::realizarOperaciones(UnidadEntrada *unidadEntrada, UnidadMemoria 
 			unidadEntrada->mostrarCintaEntrada();
 			cout << "SALIDA: ";
 			unidadSalida->mostrarCintaSalida();
-			ejecutarInstruccion(unidadEntrada, unidadMemoria, unidadSalida, operacionRealizar, argumentoOperacion, instruccionActual);
+			existeError = ejecutarInstruccion(unidadEntrada, unidadMemoria, unidadSalida, operacionRealizar, argumentoOperacion, instruccionActual);
 			this->setPunteroIP(instruccionActual); // Establecemos la instrucción a la que apunta el punteroIP.
 			operacionRealizar  = unidadMemoria->getMemoriaPrograma()[this->getPunteroIP()].operacion;
 			argumentoOperacion = unidadMemoria->getMemoriaPrograma()[this->getPunteroIP()].argumento;
@@ -53,11 +56,12 @@ void UnidadALC::realizarOperaciones(UnidadEntrada *unidadEntrada, UnidadMemoria 
 	}
 }
 
-void UnidadALC::ejecutarInstruccion(UnidadEntrada *unidadEntrada, UnidadMemoria *unidadMemoria, UnidadSalida *unidadSalida, string instruccion, string argumento, int &instruccionActual) { // Método que comprueba la validez de la instruccion y la ejecuta.
+bool UnidadALC::ejecutarInstruccion(UnidadEntrada *unidadEntrada, UnidadMemoria *unidadMemoria, UnidadSalida *unidadSalida, string instruccion, string argumento, int &instruccionActual) { // Método que comprueba la validez de la instruccion y la ejecuta.
 
 	int valorOperando = evaluarOperando(argumento).valor;
 	int tipoOperando  = evaluarOperando(argumento).tipo;
 	int valorRegistro; // Variable para los operandos de direccionamiento indirecto.
+	bool existeError =  false; // Variable para la detección de errores.
 
 	if ((instruccion.compare("LOAD") == 0) || (instruccion.compare("load") == 0)) { // Instrucción LOAD.
 		if (tipoOperando == CONSTANTE) {
@@ -73,6 +77,10 @@ void UnidadALC::ejecutarInstruccion(UnidadEntrada *unidadEntrada, UnidadMemoria 
 		instruccionActual++; // Incrementamos a la siguiente instrucción.
 	}
 	if ((instruccion.compare("STORE") == 0) || (instruccion.compare("store") == 0)) { // Instrucción STORE.
+		if (tipoOperando == CONSTANTE) {
+			cout << "Error: " << instruccion << " no permite operando de tipo constante. Línea " << instruccionActual << endl;
+			existeError = true;
+		}
 		if (tipoOperando == DIRECCIONAMIENTO_DIRECTO) {
 			unidadMemoria->insertarDato(unidadMemoria->devolverAcumulador(), valorOperando); // El contenido de R0 se almacena en la memoria según el operando.
 	    }
@@ -186,6 +194,7 @@ void UnidadALC::ejecutarInstruccion(UnidadEntrada *unidadEntrada, UnidadMemoria 
 		}
 	}
 
+	return existeError;
 }
 
 operando UnidadALC::evaluarOperando(string argumento) { // Función que evalúa el tipo de operando y devuelve una estructura con la información.

@@ -31,7 +31,7 @@ class UnidadALC { // Clase para la implementación de una unidad Aritmética, L�
         ~UnidadALC(void); // Destructor.
 
         void realizarOperaciones(UnidadEntrada *unidadEntrada, UnidadMemoria *unidadMemoria, UnidadSalida *unidadSalida, char nombreFichero[], int debug); // Método principal de la máquina RAM.
-        void ejecutarInstruccion(UnidadEntrada *unidadEntrada, UnidadMemoria *unidadMemoria, UnidadSalida *unidadSalida, string instruccion, string argumento, int &instruccionActual); // Método que comprueba la validez de la instruccion y la ejecuta.
+        bool ejecutarInstruccion(UnidadEntrada *unidadEntrada, UnidadMemoria *unidadMemoria, UnidadSalida *unidadSalida, string instruccion, string argumento, int &instruccionActual); // Método que comprueba la validez de la instruccion y la ejecuta.
         operando evaluarOperando(string argumento); // Función que evalúa el tipo de operando y devuelve una estructura con la información.
 
         int getPunteroIP(); // Método getter del atributo punteroIP.
