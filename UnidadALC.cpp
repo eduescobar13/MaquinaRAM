@@ -157,7 +157,13 @@ bool UnidadALC::ejecutarInstruccion(UnidadEntrada *unidadEntrada, UnidadMemoria 
 			existeError = true;
 		}
 		if (tipoOperando == DIRECCIONAMIENTO_DIRECTO) {
-			unidadMemoria->insertarDato(valorLeido, valorOperando); // Se lee un valor de la cinta de entrada y se almacena en la memoria según el operando.
+			if (valorOperando == 0) {
+				cout << "Error: No se puede utilizar el acumulador como operando de " << instruccion << ". Línea " << instruccionActual + 1 << endl;
+				existeError = true;
+			}
+			else {
+				unidadMemoria->insertarDato(valorLeido, valorOperando); // Se lee un valor de la cinta de entrada y se almacena en la memoria según el operando.
+	    	}
 	    }
 	    if (tipoOperando == DIRECCIONAMIENTO_INDIRECTO) {
 	    	valorRegistro = unidadMemoria->devolverDato(valorOperando);
@@ -170,7 +176,13 @@ bool UnidadALC::ejecutarInstruccion(UnidadEntrada *unidadEntrada, UnidadMemoria 
 			unidadSalida->escribirElemento(valorOperando); // Se escribe operando en la cinta.
 		}
 		if (tipoOperando == DIRECCIONAMIENTO_DIRECTO) {
-			unidadSalida->escribirElemento(unidadMemoria->devolverDato(valorOperando)); // Se escribe el registro asociado al operando en la cinta.
+			if (valorOperando == 0) {
+				cout << "Error: No se puede utilizar el acumulador como operando de " << instruccion << ". Línea " << instruccionActual + 1 << endl;
+				existeError = true;
+			}
+			else {
+				unidadSalida->escribirElemento(unidadMemoria->devolverDato(valorOperando)); // Se escribe el registro asociado al operando en la cinta.
+			}
 		}
 		if (tipoOperando == DIRECCIONAMIENTO_INDIRECTO) {
 			valorRegistro = unidadMemoria->devolverDato(valorOperando);
