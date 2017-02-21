@@ -31,15 +31,20 @@ void UnidadALC::ejecutarInstruccion(UnidadEntrada *unidadEntrada, UnidadMemoria 
 
 	int valorOperando = evaluarOperando(argumento).valor;
 	int tipoOperando  = evaluarOperando(argumento).tipo;
+	int valorRegistro; // Variable para los operandos de direccionamiento indirecto.
 
 	if ((instruccion.compare("LOAD") == 0) || (instruccion.compare("load") == 0)) { // Instrucción LOAD.
 		if (tipoOperando == CONSTANTE) {
-			unidadMemoria->insertarDato(unidadMemoria->devolverDato(valorOperando), ACUMULADOR); // El registro asociado al operando se carga en R0.
+			unidadMemoria->insertarDato(valorOperando, ACUMULADOR); // El valor del operando se carga en R0.
 		}
 		if (tipoOperando == DIRECCIONAMIENTO_DIRECTO) {
 			unidadMemoria->insertarDato(unidadMemoria->devolverDato(valorOperando), ACUMULADOR); // El registro asociado al operando se carga en R0.
-			instruccionActual++; // Incrementamos a la siguiente instrucción.
 		}
+		if (tipoOperando == DIRECCIONAMIENTO_INDIRECTO) {
+			valorRegistro = unidadMemoria->devolverDato(valorOperando);
+			unidadMemoria->insertarDato(unidadMemoria->devolverDato(valorRegistro), ACUMULADOR); // El registro asociado al operando se carga en R0.
+		}
+		instruccionActual++; // Incrementamos a la siguiente instrucción.
 	}
 	if ((instruccion.compare("STORE") == 0) || (instruccion.compare("store") == 0)) { // Instrucción STORE.
 		int operando = atoi(argumento.c_str());
