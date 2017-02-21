@@ -29,10 +29,17 @@ void UnidadALC::realizarOperaciones(UnidadEntrada *unidadEntrada, UnidadMemoria 
 
 void UnidadALC::ejecutarInstruccion(UnidadEntrada *unidadEntrada, UnidadMemoria *unidadMemoria, UnidadSalida *unidadSalida, string instruccion, string argumento, int &instruccionActual) { // Método que comprueba la validez de la instruccion y la ejecuta.
 
+	int valorOperando = evaluarOperando(argumento).valor;
+	int tipoOperando  = evaluarOperando(argumento).tipo;
+
 	if ((instruccion.compare("LOAD") == 0) || (instruccion.compare("load") == 0)) { // Instrucción LOAD.
-		int operando = atoi(argumento.c_str()); // Al no ser una etiqueta, convertimos el argumento en un entero.
-		unidadMemoria->insertarDato(unidadMemoria->devolverDato(operando), ACUMULADOR); // El registro asociado al operando se carga en R0.
-		instruccionActual++; // Incrementamos a la siguiente instrucción.
+		if (tipoOperando == CONSTANTE) {
+			unidadMemoria->insertarDato(unidadMemoria->devolverDato(valorOperando), ACUMULADOR); // El registro asociado al operando se carga en R0.
+		}
+		if (tipoOperando == DIRECCIONAMIENTO_DIRECTO) {
+			unidadMemoria->insertarDato(unidadMemoria->devolverDato(valorOperando), ACUMULADOR); // El registro asociado al operando se carga en R0.
+			instruccionActual++; // Incrementamos a la siguiente instrucción.
+		}
 	}
 	if ((instruccion.compare("STORE") == 0) || (instruccion.compare("store") == 0)) { // Instrucción STORE.
 		int operando = atoi(argumento.c_str());
@@ -94,6 +101,35 @@ void UnidadALC::ejecutarInstruccion(UnidadEntrada *unidadEntrada, UnidadMemoria 
 		}
 	}
 
+}
+
+operando UnidadALC::evaluarOperando(string argumento) { // Función que evalúa el tipo de operando y devuelve una estructura con la información.
+
+	operando valorRetorno; // Variable para almacenenar los valores a retornar.
+	char caracterTipo = argumento[0]; // Almacenamos el primer carácter del argumento que determinará el tipo.
+	string operandoString; // Variable usada para conversiones.
+	int operando; // Variable usada para conversiones.
+
+	switch(caracterTipo) {
+		case '=': // Operando de tipo constante.
+			operandoString = argumento.substr(1, argumento.size() - 1); // Eliminamos el = del argumento.
+			operando = atoi(operandoString.c_str()); // Convertimos el valor en un entero.
+			valorRetorno.valor = operando;
+			valorRetorno.tipo  = CONSTANTE;
+		break;
+		case '*': // Direccionamiento indirecto.
+			operandoString = argumento.substr(1, argumento.size() - 1); // Eliminamos el * del argumento.
+			operando = atoi(operandoString.c_str()); // Convertimos el valor en un entero.
+			valorRetorno.valor = operando;
+			valorRetorno.tipo  = DIRECCIONAMIENTO_INDIRECTO;
+		break;
+		default: // Direccionamiento directo.
+			operando = atoi(argumento.c_str()); // Al no tener caracteres de tipo, convertimos el argumento en un entero.
+			valorRetorno.valor = operando;
+			valorRetorno.tipo  = DIRECCIONAMIENTO_DIRECTO;
+	}
+
+	return valorRetorno;
 }
 
 //------------> MÉTODOS GETTER Y SETTER DE LA CLASE.
