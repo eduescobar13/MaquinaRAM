@@ -36,10 +36,9 @@ int main(int argc, char *argv[]) { // -----> FUNCIÓN PRINCIPAL.
 	unidadEntrada = new UnidadEntrada(argv[2]); // Creación de un objeto de unidad de entrada pasando el nombre del fichero (línea de comandos).
 	unidadMemoria = new UnidadMemoria(argv[1]); // Creación de un objeto de unidad de memoria pasando el nombre del fichero (línea de comandos).
 	unidadALC     = new UnidadALC();            // Creación de un objeto de unidad de algoritmía, lógica y control.
-	unidadSalida  = new UnidadSalida();  // Creación de un objeto de unidad de salida pasando el nombre del fichero (línea de comandos).
+	unidadSalida  = new UnidadSalida();         // Creación de un objeto de unidad de salida.
 
 	unidadALC->realizarOperaciones(unidadEntrada, unidadMemoria, unidadSalida, argv[3], debug);
 
 	return(0); 
-
 }

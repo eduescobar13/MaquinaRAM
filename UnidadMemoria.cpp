@@ -115,7 +115,7 @@ int UnidadMemoria::devolverAcumulador() { // Función que devuelve el valor del 
 
 int UnidadMemoria::devolverRegistroEtiqueta(string etiqueta) { // Función que devuelve el registro asociado a una etiqueta.
 
-	int valorRetorno;
+	int valorRetorno = -1; // Inicializado en -1, para los casos en los que no se encuentre.
 
 	for (int i = 0; i < vectorEtiqueta.size(); i++) { // Buscamos la etiqueta dentro del vector de etiquetas.
 		if (vectorEtiqueta[i].nombre.compare(etiqueta) == 0) {

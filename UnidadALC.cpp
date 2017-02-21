@@ -180,10 +180,18 @@ bool UnidadALC::ejecutarInstruccion(UnidadEntrada *unidadEntrada, UnidadMemoria 
 	}
 	else if ((instruccion.compare("JUMP") == 0) || (instruccion.compare("jump") == 0)) { // Instrucción JUMP.
 		instruccionActual = unidadMemoria->devolverRegistroEtiqueta(argumento); // Almacenamos el registro asociado a la etiqueta del jump.
+		if (instruccionActual == -1) {
+			cout << "Error: " << argumento << " no es una etiqueta existente en el programa. Línea " << instruccionActual + 1 << endl;
+			existeError = true;
+		}
 	}
 	else if ((instruccion.compare("JZERO") == 0) || (instruccion.compare("jzero") == 0)) { // Instrucción JZERO.
 		if (unidadMemoria->devolverAcumulador() == 0) { // Si el R0 es igual 0.
 			instruccionActual = unidadMemoria->devolverRegistroEtiqueta(argumento); // Almacenamos el registro asociado a la etiqueta del jzero.
+			if (instruccionActual == -1) {
+				cout << "Error: " << argumento << " no es una etiqueta existente en el programa. Línea " << instruccionActual + 1 << endl;
+				existeError = true;
+			}
 		}
 		else {
 			instruccionActual++;
@@ -192,6 +200,10 @@ bool UnidadALC::ejecutarInstruccion(UnidadEntrada *unidadEntrada, UnidadMemoria 
 	else if ((instruccion.compare("JGTZ") == 0) || (instruccion.compare("jgtz") == 0)) { // Instrucción JGTZ.
 		if (unidadMemoria->devolverAcumulador() > 0) { // Si el R0 es mayor 0.
 			instruccionActual = unidadMemoria->devolverRegistroEtiqueta(argumento); // Almacenamos el registro asociado a la etiqueta del jzero.
+			if (instruccionActual == -1) {
+				cout << "Error: " << argumento << " no es una etiqueta existente en el programa. Línea " << instruccionActual + 1 << endl;
+				existeError = true;
+			}
 		}
 		else {
 			instruccionActual++;

@@ -3,11 +3,11 @@
 # cinta de salida (el valor 0 no se copia)
 
 bucle:	READ 1
-				LOAD 1
-				JZERO fin
-				LOAD 1
-				MUL =2
-				STORE 1
-				WRITE 1
-				JUMP bucle
-fin:		HALT
+		LOAD 1
+		JZERO fin
+		LOAD 1
+		MUL =2
+		STORE 1
+		WRITE 1
+		JUMP bucle
+fin:	HALT
