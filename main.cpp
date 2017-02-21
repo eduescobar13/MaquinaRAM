@@ -27,6 +27,9 @@ int main(int argc, char *argv[]) { // -----> FUNCIÓN PRINCIPAL.
 	UnidadALC	  *unidadALC;
 	UnidadSalida  *unidadSalida;
 
+	char debugChar = *argv[4]; // Obtenemos el valor del debug.
+	int debug = debugChar - '0'; // Convertimos dicho valor a un entero.
+
 	cout << "  ___|PRÁCTICA 1: DISEÑO Y ANÁLISIS DE ALGORITMOS|___" << endl;
 	cout << "-------------------- MÁQUINA RAM --------------------" << endl;
 
@@ -35,12 +38,7 @@ int main(int argc, char *argv[]) { // -----> FUNCIÓN PRINCIPAL.
 	unidadALC     = new UnidadALC();            // Creación de un objeto de unidad de algoritmía, lógica y control.
 	unidadSalida  = new UnidadSalida();  // Creación de un objeto de unidad de salida pasando el nombre del fichero (línea de comandos).
 
-	unidadEntrada->mostrarCintaEntrada();
-	unidadALC->realizarOperaciones(unidadEntrada, unidadMemoria, unidadSalida, argv[3]);
-	cout << "----------------------------" << endl;
-	unidadMemoria->mostrarMemoriaDato();
-	unidadEntrada->mostrarCintaEntrada();
-	unidadSalida->mostrarCintaSalida();
+	unidadALC->realizarOperaciones(unidadEntrada, unidadMemoria, unidadSalida, argv[3], debug);
 
 	return(0); 
 

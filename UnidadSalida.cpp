@@ -23,8 +23,14 @@ void UnidadSalida::escribirElemento(int elemento) { // Método que escribe un el
 
 void UnidadSalida::mostrarCintaSalida() { // Método para mostrar bajo formato la cinta de salida.
 
+	cout << "|";
 	for(int i = 0; i < cintaSalida.size(); i++) {
-		cout << cintaSalida[i] << "|";
+		if (i == cintaSalida.size() - 1) {
+			cout << " |";
+		}
+		else {
+			cout << cintaSalida[i] << "|";
+		}
 	}
 
 	cout << endl;

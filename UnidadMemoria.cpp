@@ -86,6 +86,7 @@ void UnidadMemoria::insertarEtiqueta(string nombre, int registro) { // Método q
 
 void UnidadMemoria::mostrarMemoriaDato() { // Método que muestra por pantalla la memoria de datos.
 
+	cout << "--------- MEMORIA DE DATOS ---------" << endl;
 	for (int i = 0; i < memoriaDato.size(); i++) {
 		if(i == 0) {
 			cout << "R" << i << " (ACC): " << memoriaDato[i] << endl;
@@ -96,16 +97,15 @@ void UnidadMemoria::mostrarMemoriaDato() { // Método que muestra por pantalla l
 			cout << "--------------" << endl;
 		}
 	}
-	cout << endl;
 }
 
 void UnidadMemoria::mostrarMemoriaPrograma() { // Método que muestra por pantalla la memoria de programas.
 
+	cout << "------- MEMORIA DE PROGRAMAS -------" << endl;
 	for (int i = 0; i < memoriaPrograma.size(); i++) {
 		cout << "P" << i << ": " << memoriaPrograma[i].operacion << " " << memoriaPrograma[i].argumento << endl;
 		cout << "--------------" << endl;
 	}
-	cout << endl;
 }
 
 int UnidadMemoria::devolverAcumulador() { // Función que devuelve el valor del acumulador (R0).

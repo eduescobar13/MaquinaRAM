@@ -3,10 +3,8 @@
 # de salida (el valor 0 no se copia)
 
 lee:	read 1
-		read 2
-		read 3
-		read 4
-		read 5
-		read 6
-		load *5
+		load 1
+		jzero fin
+		write 1
+		jump lee
 fin:	halt

@@ -47,6 +47,7 @@ int UnidadEntrada::leerElemento() { // Método para la lectura de elementos de l
 
 void UnidadEntrada::mostrarCintaEntrada() { // Método para mostrar bajo formato la cinta de entrada.
 
+	cout << "|";
 	for(int i = 0; i < cintaEntrada.size(); i++) {
 		cout << cintaEntrada[i] << "|";
 	}

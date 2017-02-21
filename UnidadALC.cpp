@@ -9,22 +9,48 @@ UnidadALC::~UnidadALC() { // Destructor.
 	punteroIP = 0; // Ponemos el punteroIP a 0.
 }
 
-void UnidadALC::realizarOperaciones(UnidadEntrada *unidadEntrada, UnidadMemoria *unidadMemoria, UnidadSalida *unidadSalida, char nombreFichero[]) { // Método principal de la máquina RAM. 
+void UnidadALC::realizarOperaciones(UnidadEntrada *unidadEntrada, UnidadMemoria *unidadMemoria, UnidadSalida *unidadSalida, char nombreFichero[], int debug) { // Método principal de la máquina RAM. 
 
 	string operacionRealizar  = unidadMemoria->getMemoriaPrograma()[0].operacion; // Variable para almacenar la operación a realizar. 
 	string argumentoOperacion = unidadMemoria->getMemoriaPrograma()[0].argumento; // Variable para almacenar los argumentos de la operación a realizar.
 	int numeroOperaciones     = unidadMemoria->getMemoriaPrograma().size(); // Variable que almacena el número de operaciones de la memoria de programa.
 	int instruccionActual     = 0; // Variable contador para determinar el registro actual.
+	int totalOperaciones      = 0; // Contador para almacenar el número de operaciones ejecutadas.
 
-	while ((operacionRealizar.compare("halt") != 0) && (operacionRealizar.compare("HALT") != 0) && (this->getPunteroIP() != numeroOperaciones)) { 
-		ejecutarInstruccion(unidadEntrada, unidadMemoria, unidadSalida, operacionRealizar, argumentoOperacion, instruccionActual);
-		this->setPunteroIP(instruccionActual); // Establecemos la instrucción a la que apunta el punteroIP.
-		cout << "OP: " << operacionRealizar << endl;
-		operacionRealizar  = unidadMemoria->getMemoriaPrograma()[this->getPunteroIP()].operacion;
-		argumentoOperacion = unidadMemoria->getMemoriaPrograma()[this->getPunteroIP()].argumento;
+	if (debug == 0) {
+		while ((operacionRealizar.compare("halt") != 0) && (operacionRealizar.compare("HALT") != 0) && (this->getPunteroIP() != numeroOperaciones)) { 
+			ejecutarInstruccion(unidadEntrada, unidadMemoria, unidadSalida, operacionRealizar, argumentoOperacion, instruccionActual);
+			this->setPunteroIP(instruccionActual); // Establecemos la instrucción a la que apunta el punteroIP.
+			operacionRealizar  = unidadMemoria->getMemoriaPrograma()[this->getPunteroIP()].operacion;
+			argumentoOperacion = unidadMemoria->getMemoriaPrograma()[this->getPunteroIP()].argumento;
+			totalOperaciones++;
+		}
+		unidadSalida->volcarCintaFichero(nombreFichero); // Volcamos el contenido de la cinta de salida en el fichero.
+		cout << "TOTAL INSTRUCCIONES EJECUTADAS: " << totalOperaciones << endl;
 	}
-
-	unidadSalida->volcarCintaFichero(nombreFichero); // Volcamos el contenido de la cinta de salida en el fichero.
+	else if (debug == 1) {
+		while ((operacionRealizar.compare("halt") != 0) && (operacionRealizar.compare("HALT") != 0) && (this->getPunteroIP() != numeroOperaciones)) { 
+			cout << "------------------- INSTRUCCIÓN " << totalOperaciones + 1 << " -------------------" << endl;
+			cout << "REGISTRO IP: " << operacionRealizar << " " << argumentoOperacion << endl;
+			cout << "INSTRUCCIONES EJECUTADAS: " << totalOperaciones << endl;
+			unidadMemoria->mostrarMemoriaDato();
+			unidadMemoria->mostrarMemoriaPrograma();
+			cout << "-------------- CINTAS --------------" << endl;
+			cout << "ENTRADA: ";
+			unidadEntrada->mostrarCintaEntrada();
+			cout << "SALIDA: ";
+			unidadSalida->mostrarCintaSalida();
+			ejecutarInstruccion(unidadEntrada, unidadMemoria, unidadSalida, operacionRealizar, argumentoOperacion, instruccionActual);
+			this->setPunteroIP(instruccionActual); // Establecemos la instrucción a la que apunta el punteroIP.
+			operacionRealizar  = unidadMemoria->getMemoriaPrograma()[this->getPunteroIP()].operacion;
+			argumentoOperacion = unidadMemoria->getMemoriaPrograma()[this->getPunteroIP()].argumento;
+			totalOperaciones++;
+			cout << "-----------------------------------------------------" << endl;
+			cout << "PULSE ENTER PARA CONTINUAR ";
+			getchar();
+		}
+		unidadSalida->volcarCintaFichero(nombreFichero); // Volcamos el contenido de la cinta de salida en el fichero.
+	}
 }
 
 void UnidadALC::ejecutarInstruccion(UnidadEntrada *unidadEntrada, UnidadMemoria *unidadMemoria, UnidadSalida *unidadSalida, string instruccion, string argumento, int &instruccionActual) { // Método que comprueba la validez de la instruccion y la ejecuta.
@@ -98,7 +124,7 @@ void UnidadALC::ejecutarInstruccion(UnidadEntrada *unidadEntrada, UnidadMemoria 
 			valorRegistro = unidadMemoria->devolverDato(valorOperando);
 			producto      = unidadMemoria->devolverAcumulador() * unidadMemoria->devolverDato(valorRegistro);
 		}
-		unidadMemoria->insertarDato(producto, ACUMULADOR); // El operando se suma a R0 y el resultado se almacena en R0.
+		unidadMemoria->insertarDato(producto, ACUMULADOR); // El operando multiplica a R0 y el resultado se almacena en R0.
 	    instruccionActual++;
 	}
 	if ((instruccion.compare("DIV") == 0) || (instruccion.compare("div") == 0)) { // Instrucción DIV.
@@ -113,7 +139,7 @@ void UnidadALC::ejecutarInstruccion(UnidadEntrada *unidadEntrada, UnidadMemoria 
 			valorRegistro = unidadMemoria->devolverDato(valorOperando);
 			division      = unidadMemoria->devolverAcumulador() / unidadMemoria->devolverDato(valorRegistro);
 		}
-		unidadMemoria->insertarDato(suma, ACUMULADOR); // El operando se suma a R0 y el resultado se almacena en R0.
+		unidadMemoria->insertarDato(division, ACUMULADOR); // El operando divide a R0 y el resultado se almacena en R0.
 	    instruccionActual++;
 	}
 	if ((instruccion.compare("READ") == 0) || (instruccion.compare("read") == 0)) { // Instrucción READ.
@@ -132,7 +158,7 @@ void UnidadALC::ejecutarInstruccion(UnidadEntrada *unidadEntrada, UnidadMemoria 
 			unidadSalida->escribirElemento(valorOperando); // Se escribe operando en la cinta.
 		}
 		if (tipoOperando == DIRECCIONAMIENTO_DIRECTO) {
-			unidadSalida->escribirElemento(unidadMemoria->devolverDato(operando)); // Se escribe el registro asociado al operando en la cinta.
+			unidadSalida->escribirElemento(unidadMemoria->devolverDato(valorOperando)); // Se escribe el registro asociado al operando en la cinta.
 		}
 		if (tipoOperando == DIRECCIONAMIENTO_INDIRECTO) {
 			valorRegistro = unidadMemoria->devolverDato(valorOperando);
