@@ -76,9 +76,9 @@ bool UnidadALC::ejecutarInstruccion(UnidadEntrada *unidadEntrada, UnidadMemoria 
 		}
 		instruccionActual++; // Incrementamos a la siguiente instrucción.
 	}
-	if ((instruccion.compare("STORE") == 0) || (instruccion.compare("store") == 0)) { // Instrucción STORE.
+	else if ((instruccion.compare("STORE") == 0) || (instruccion.compare("store") == 0)) { // Instrucción STORE.
 		if (tipoOperando == CONSTANTE) {
-			cout << "Error: " << instruccion << " no permite operando de tipo constante. Línea " << instruccionActual << endl;
+			cout << "Error: " << instruccion << " no permite operando de tipo constante. Línea " << instruccionActual + 1 << endl;
 			existeError = true;
 		}
 		if (tipoOperando == DIRECCIONAMIENTO_DIRECTO) {
@@ -90,7 +90,7 @@ bool UnidadALC::ejecutarInstruccion(UnidadEntrada *unidadEntrada, UnidadMemoria 
 	    }
 	    instruccionActual++;
 	}
-	if ((instruccion.compare("ADD") == 0) || (instruccion.compare("add") == 0)) { // Instrucción ADD.
+	else if ((instruccion.compare("ADD") == 0) || (instruccion.compare("add") == 0)) { // Instrucción ADD.
 		int suma; // Variable para almacenar el resultado de la suma.
 		if (tipoOperando == CONSTANTE) {
 			suma = unidadMemoria->devolverAcumulador() + valorOperando; 
@@ -105,7 +105,7 @@ bool UnidadALC::ejecutarInstruccion(UnidadEntrada *unidadEntrada, UnidadMemoria 
 		unidadMemoria->insertarDato(suma, ACUMULADOR); // El operando se suma a R0 y el resultado se almacena en R0.
 	    instruccionActual++;
 	}
-	if ((instruccion.compare("SUB") == 0) || (instruccion.compare("sub") == 0)) { // Instrucción SUB.
+	else if ((instruccion.compare("SUB") == 0) || (instruccion.compare("sub") == 0)) { // Instrucción SUB.
 		int resta; // Variable para almacenar el resultado de la resta.
 		if (tipoOperando == CONSTANTE) {
 			resta = unidadMemoria->devolverAcumulador() - valorOperando; 
@@ -120,7 +120,7 @@ bool UnidadALC::ejecutarInstruccion(UnidadEntrada *unidadEntrada, UnidadMemoria 
 		unidadMemoria->insertarDato(resta, ACUMULADOR); // El operando se resta a R0 y el resultado se almacena en R0.
 	    instruccionActual++;
 	}
-	if ((instruccion.compare("MUL") == 0) || (instruccion.compare("mul") == 0)) { // Instrucción MUL.
+	else if ((instruccion.compare("MUL") == 0) || (instruccion.compare("mul") == 0)) { // Instrucción MUL.
 		int producto; // Variable para almacenar el resultado del producto.
 		if (tipoOperando == CONSTANTE) {
 			producto = unidadMemoria->devolverAcumulador() * valorOperando; 
@@ -135,7 +135,7 @@ bool UnidadALC::ejecutarInstruccion(UnidadEntrada *unidadEntrada, UnidadMemoria 
 		unidadMemoria->insertarDato(producto, ACUMULADOR); // El operando multiplica a R0 y el resultado se almacena en R0.
 	    instruccionActual++;
 	}
-	if ((instruccion.compare("DIV") == 0) || (instruccion.compare("div") == 0)) { // Instrucción DIV.
+	else if ((instruccion.compare("DIV") == 0) || (instruccion.compare("div") == 0)) { // Instrucción DIV.
 		int division; // Variable para almacenar el resultado de la division.
 		if (tipoOperando == CONSTANTE) {
 			division = unidadMemoria->devolverAcumulador() / valorOperando; 
@@ -150,8 +150,12 @@ bool UnidadALC::ejecutarInstruccion(UnidadEntrada *unidadEntrada, UnidadMemoria 
 		unidadMemoria->insertarDato(division, ACUMULADOR); // El operando divide a R0 y el resultado se almacena en R0.
 	    instruccionActual++;
 	}
-	if ((instruccion.compare("READ") == 0) || (instruccion.compare("read") == 0)) { // Instrucción READ.
+	else if ((instruccion.compare("READ") == 0) || (instruccion.compare("read") == 0)) { // Instrucción READ.
 		int valorLeido = unidadEntrada->leerElemento(); // Almacenamos el valor leido de la cinta de entrada.
+		if (tipoOperando == CONSTANTE) {
+			cout << "Error: " << instruccion << " no permite operando de tipo constante. Línea " << instruccionActual + 1 << endl;
+			existeError = true;
+		}
 		if (tipoOperando == DIRECCIONAMIENTO_DIRECTO) {
 			unidadMemoria->insertarDato(valorLeido, valorOperando); // Se lee un valor de la cinta de entrada y se almacena en la memoria según el operando.
 	    }
@@ -161,7 +165,7 @@ bool UnidadALC::ejecutarInstruccion(UnidadEntrada *unidadEntrada, UnidadMemoria 
 	    }
 	    instruccionActual++;
 	}
-	if ((instruccion.compare("WRITE") == 0) || (instruccion.compare("write") == 0)) { // Instrucción WRITE.
+	else if ((instruccion.compare("WRITE") == 0) || (instruccion.compare("write") == 0)) { // Instrucción WRITE.
 		if (tipoOperando == CONSTANTE) {
 			unidadSalida->escribirElemento(valorOperando); // Se escribe operando en la cinta.
 		}
@@ -174,10 +178,10 @@ bool UnidadALC::ejecutarInstruccion(UnidadEntrada *unidadEntrada, UnidadMemoria 
 		}
 	    instruccionActual++;
 	}
-	if ((instruccion.compare("JUMP") == 0) || (instruccion.compare("jump") == 0)) { // Instrucción JUMP.
+	else if ((instruccion.compare("JUMP") == 0) || (instruccion.compare("jump") == 0)) { // Instrucción JUMP.
 		instruccionActual = unidadMemoria->devolverRegistroEtiqueta(argumento); // Almacenamos el registro asociado a la etiqueta del jump.
 	}
-	if ((instruccion.compare("JZERO") == 0) || (instruccion.compare("jzero") == 0)) { // Instrucción JZERO.
+	else if ((instruccion.compare("JZERO") == 0) || (instruccion.compare("jzero") == 0)) { // Instrucción JZERO.
 		if (unidadMemoria->devolverAcumulador() == 0) { // Si el R0 es igual 0.
 			instruccionActual = unidadMemoria->devolverRegistroEtiqueta(argumento); // Almacenamos el registro asociado a la etiqueta del jzero.
 		}
@@ -185,13 +189,17 @@ bool UnidadALC::ejecutarInstruccion(UnidadEntrada *unidadEntrada, UnidadMemoria 
 			instruccionActual++;
 		}
 	}
-	if ((instruccion.compare("JGTZ") == 0) || (instruccion.compare("jgtz") == 0)) { // Instrucción JGTZ.
+	else if ((instruccion.compare("JGTZ") == 0) || (instruccion.compare("jgtz") == 0)) { // Instrucción JGTZ.
 		if (unidadMemoria->devolverAcumulador() > 0) { // Si el R0 es mayor 0.
 			instruccionActual = unidadMemoria->devolverRegistroEtiqueta(argumento); // Almacenamos el registro asociado a la etiqueta del jzero.
 		}
 		else {
 			instruccionActual++;
 		}
+	}
+	else {
+		cout << "Error: " << instruccion << " no es una instrucción válida. Línea " << instruccionActual + 1 << endl;
+		existeError = true;
 	}
 
 	return existeError;
