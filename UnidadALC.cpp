@@ -47,43 +47,97 @@ void UnidadALC::ejecutarInstruccion(UnidadEntrada *unidadEntrada, UnidadMemoria 
 		instruccionActual++; // Incrementamos a la siguiente instrucción.
 	}
 	if ((instruccion.compare("STORE") == 0) || (instruccion.compare("store") == 0)) { // Instrucción STORE.
-		int operando = atoi(argumento.c_str());
-		unidadMemoria->insertarDato(unidadMemoria->devolverAcumulador(), operando); // El contenido de R0 se almacena en la memoria según el operando.
+		if (tipoOperando == DIRECCIONAMIENTO_DIRECTO) {
+			unidadMemoria->insertarDato(unidadMemoria->devolverAcumulador(), valorOperando); // El contenido de R0 se almacena en la memoria según el operando.
+	    }
+	    if (tipoOperando == DIRECCIONAMIENTO_INDIRECTO) {
+	    	valorRegistro = unidadMemoria->devolverDato(valorOperando);
+	    	unidadMemoria->insertarDato(unidadMemoria->devolverAcumulador(), valorRegistro); // El contenido de R0 se almacena en la memoria según el operando.
+	    }
 	    instruccionActual++;
 	}
 	if ((instruccion.compare("ADD") == 0) || (instruccion.compare("add") == 0)) { // Instrucción ADD.
-		int operando = atoi(argumento.c_str());
-		int suma     = unidadMemoria->devolverAcumulador() + operando;
+		int suma; // Variable para almacenar el resultado de la suma.
+		if (tipoOperando == CONSTANTE) {
+			suma = unidadMemoria->devolverAcumulador() + valorOperando; 
+		}
+		if (tipoOperando == DIRECCIONAMIENTO_DIRECTO) {
+			suma = unidadMemoria->devolverAcumulador() + unidadMemoria->devolverDato(valorOperando); 
+		}
+		if (tipoOperando == DIRECCIONAMIENTO_INDIRECTO) {
+			valorRegistro = unidadMemoria->devolverDato(valorOperando);
+			suma          = unidadMemoria->devolverAcumulador() + unidadMemoria->devolverDato(valorRegistro);
+		}
 		unidadMemoria->insertarDato(suma, ACUMULADOR); // El operando se suma a R0 y el resultado se almacena en R0.
 	    instruccionActual++;
 	}
 	if ((instruccion.compare("SUB") == 0) || (instruccion.compare("sub") == 0)) { // Instrucción SUB.
-		int operando = atoi(argumento.c_str());
-		int resta    = unidadMemoria->devolverAcumulador() - operando;
+		int resta; // Variable para almacenar el resultado de la resta.
+		if (tipoOperando == CONSTANTE) {
+			resta = unidadMemoria->devolverAcumulador() - valorOperando; 
+		}
+		if (tipoOperando == DIRECCIONAMIENTO_DIRECTO) {
+			resta = unidadMemoria->devolverAcumulador() - unidadMemoria->devolverDato(valorOperando); 
+		}
+		if (tipoOperando == DIRECCIONAMIENTO_INDIRECTO) {
+			valorRegistro = unidadMemoria->devolverDato(valorOperando);
+			resta         = unidadMemoria->devolverAcumulador() - unidadMemoria->devolverDato(valorRegistro);
+		}
 		unidadMemoria->insertarDato(resta, ACUMULADOR); // El operando se resta a R0 y el resultado se almacena en R0.
 	    instruccionActual++;
 	}
 	if ((instruccion.compare("MUL") == 0) || (instruccion.compare("mul") == 0)) { // Instrucción MUL.
-		int operando = atoi(argumento.c_str());
-		int producto = unidadMemoria->devolverAcumulador() * operando;
-		unidadMemoria->insertarDato(producto, ACUMULADOR); // El operando se multiplica a R0 y el resultado se almacena en R0.
+		int producto; // Variable para almacenar el resultado del producto.
+		if (tipoOperando == CONSTANTE) {
+			producto = unidadMemoria->devolverAcumulador() * valorOperando; 
+		}
+		if (tipoOperando == DIRECCIONAMIENTO_DIRECTO) {
+			producto = unidadMemoria->devolverAcumulador() * unidadMemoria->devolverDato(valorOperando); 
+		}
+		if (tipoOperando == DIRECCIONAMIENTO_INDIRECTO) {
+			valorRegistro = unidadMemoria->devolverDato(valorOperando);
+			producto      = unidadMemoria->devolverAcumulador() * unidadMemoria->devolverDato(valorRegistro);
+		}
+		unidadMemoria->insertarDato(producto, ACUMULADOR); // El operando se suma a R0 y el resultado se almacena en R0.
 	    instruccionActual++;
 	}
 	if ((instruccion.compare("DIV") == 0) || (instruccion.compare("div") == 0)) { // Instrucción DIV.
-		int operando = atoi(argumento.c_str());
-		int division = unidadMemoria->devolverAcumulador() / operando; // División redondeada a entero.
-		unidadMemoria->insertarDato(division, ACUMULADOR); // El operando divide a R0 y el resultado se almacena en R0.
+		int division; // Variable para almacenar el resultado de la division.
+		if (tipoOperando == CONSTANTE) {
+			division = unidadMemoria->devolverAcumulador() / valorOperando; 
+		}
+		if (tipoOperando == DIRECCIONAMIENTO_DIRECTO) {
+			division = unidadMemoria->devolverAcumulador() / unidadMemoria->devolverDato(valorOperando); 
+		}
+		if (tipoOperando == DIRECCIONAMIENTO_INDIRECTO) {
+			valorRegistro = unidadMemoria->devolverDato(valorOperando);
+			division      = unidadMemoria->devolverAcumulador() / unidadMemoria->devolverDato(valorRegistro);
+		}
+		unidadMemoria->insertarDato(suma, ACUMULADOR); // El operando se suma a R0 y el resultado se almacena en R0.
 	    instruccionActual++;
 	}
 	if ((instruccion.compare("READ") == 0) || (instruccion.compare("read") == 0)) { // Instrucción READ.
-		int operando   = atoi(argumento.c_str());
 		int valorLeido = unidadEntrada->leerElemento(); // Almacenamos el valor leido de la cinta de entrada.
-		unidadMemoria->insertarDato(valorLeido, operando); // Se lee un valor de la cinta de entrada y se almacena en la memoria según el operando.
+		if (tipoOperando == DIRECCIONAMIENTO_DIRECTO) {
+			unidadMemoria->insertarDato(valorLeido, valorOperando); // Se lee un valor de la cinta de entrada y se almacena en la memoria según el operando.
+	    }
+	    if (tipoOperando == DIRECCIONAMIENTO_INDIRECTO) {
+	    	valorRegistro = unidadMemoria->devolverDato(valorOperando);
+	    	unidadMemoria->insertarDato(valorLeido, valorRegistro);
+	    }
 	    instruccionActual++;
 	}
 	if ((instruccion.compare("WRITE") == 0) || (instruccion.compare("write") == 0)) { // Instrucción WRITE.
-		int operando = atoi(argumento.c_str());
-		unidadSalida->escribirElemento(unidadMemoria->devolverDato(operando)); // Se escribe el registro asociado al operando en la cinta.
+		if (tipoOperando == CONSTANTE) {
+			unidadSalida->escribirElemento(valorOperando); // Se escribe operando en la cinta.
+		}
+		if (tipoOperando == DIRECCIONAMIENTO_DIRECTO) {
+			unidadSalida->escribirElemento(unidadMemoria->devolverDato(operando)); // Se escribe el registro asociado al operando en la cinta.
+		}
+		if (tipoOperando == DIRECCIONAMIENTO_INDIRECTO) {
+			valorRegistro = unidadMemoria->devolverDato(valorOperando);
+			unidadSalida->escribirElemento(unidadMemoria->devolverDato(valorRegistro));
+		}
 	    instruccionActual++;
 	}
 	if ((instruccion.compare("JUMP") == 0) || (instruccion.compare("jump") == 0)) { // Instrucción JUMP.
