@@ -1,5 +1,5 @@
-#ESIT ULL Grado de Informática
-##DISEÑO Y ANÁLISIS DE ALGORITMOS. Elaboración de una Máquina RAM.
+# ESIT ULL Grado de Informática
+## DISEÑO Y ANÁLISIS DE ALGORITMOS. Elaboración de una Máquina RAM.
 #### Realizada por Eduardo Escobar Alberto
 
 ##### **COMPILACIÓN: g++ -g main.cpp UnidadEntrada.cpp UnidadSalida.cpp UnidadMemoria.cpp UnidadAritmetica.cpp -o RAM**
